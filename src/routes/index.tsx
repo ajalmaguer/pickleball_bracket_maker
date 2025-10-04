@@ -1,11 +1,18 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useState } from 'react';
+import { atom, useAtom } from 'jotai';
 import { Users, Calendar, Play } from 'lucide-react';
 import {
   generateSchedule,
   type Match,
   type MatchWithoutByes,
 } from './generateSchedule';
+import { atomWithStorage } from 'jotai/utils';
+
+const numPlayersAtom = atom<string | number>(8);
+const scheduleAtom = atomWithStorage<ReturnType<
+  typeof generateSchedule
+> | null>('schedule', null);
+const playerNamesAtom = atomWithStorage<string[]>('playerNames', []);
 
 export const Route = createFileRoute('/')({
   component: App,
@@ -18,13 +25,18 @@ function hasNoByes(match: Match | MatchWithoutByes): match is MatchWithoutByes {
 }
 
 const PickleballScheduler = () => {
-  const [numPlayers, setNumPlayers] = useState<string | number>(8);
-  const [schedule, setSchedule] = useState<ReturnType<
-    typeof generateSchedule
-  > | null>(null);
-  const [playerNames, setPlayerNames] = useState<string[]>([]);
+  const [numPlayers, setNumPlayers] = useAtom(numPlayersAtom);
+  const [schedule, setSchedule] = useAtom(scheduleAtom);
+  const [playerNames, setPlayerNames] = useAtom(playerNamesAtom);
 
   const handleGenerate = () => {
+    if (schedule) {
+      const confirm = window.confirm(
+        'Generating a new schedule will erase the current one. Continue?'
+      );
+      if (!confirm) return;
+    }
+
     if (typeof numPlayers !== 'number') {
       alert('Please enter a valid number of players (must be divisible by 4).');
       return;
@@ -133,7 +145,7 @@ const PickleballScheduler = () => {
                 {schedule.map((round, roundIdx) => (
                   <div
                     key={roundIdx}
-                    className="border-l-4 border-green-500 pl-6 py-4 bg-gray-50 rounded-r-lg"
+                    className="border-l-4 border-green-500 px-6 py-4 bg-gray-50 rounded-r-lg"
                   >
                     <h3 className="text-xl font-semibold text-gray-800 mb-4">
                       Round {roundIdx + 1}
