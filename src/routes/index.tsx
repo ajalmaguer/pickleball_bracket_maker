@@ -1,12 +1,14 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { atom, useAtom } from 'jotai';
-import { Users, Calendar, Play } from 'lucide-react';
+import { atomWithStorage } from 'jotai/utils';
+import { Calendar, Play, Users } from 'lucide-react';
+import type { FunctionComponent, ReactNode } from 'react';
+import { useState } from 'react';
 import {
   generateSchedule,
   type Match,
   type MatchWithoutByes,
 } from './generateSchedule';
-import { atomWithStorage } from 'jotai/utils';
 
 const numPlayersAtom = atom<string | number>(8);
 const scheduleAtom = atomWithStorage<ReturnType<
@@ -20,9 +22,40 @@ export const Route = createFileRoute('/')({
 
 function hasNoByes(match: Match | MatchWithoutByes): match is MatchWithoutByes {
   const { team1, team2 } = match;
-  console.log(team1, team2);
   return team1.every((player) => !!player) && team2.every((player) => !!player);
 }
+
+const Toggle: FunctionComponent<{
+  overRideShow: boolean;
+  children: ReactNode;
+}> = ({ overRideShow, children }) => {
+  const [toggle, setToggle] = useState(false);
+
+  if (overRideShow || toggle) {
+    return (
+      <div className="mb-4">
+        <button
+          onClick={() => setToggle(false)}
+          className="flex items-center gap-2 bg-gray-200 text-gray-700 px-3 py-1 rounded-md font-medium border border-gray-300 hover:bg-gray-300 transition-colors text-sm"
+        >
+          Hide
+        </button>
+        {children}
+      </div>
+    );
+  }
+
+  if (!toggle) {
+    return (
+      <button
+        onClick={() => setToggle(true)}
+        className="flex items-center gap-2 bg-gray-200 text-gray-700 px-3 py-1 rounded-md font-medium border border-gray-300 hover:bg-gray-300 transition-colors text-sm"
+      >
+        Regenerate schedule
+      </button>
+    );
+  }
+};
 
 const PickleballScheduler = () => {
   const [numPlayers, setNumPlayers] = useAtom(numPlayersAtom);
@@ -30,18 +63,15 @@ const PickleballScheduler = () => {
   const [playerNames, setPlayerNames] = useAtom(playerNamesAtom);
 
   const handleGenerate = () => {
-    if (schedule) {
-      const confirm = window.confirm(
-        'Generating a new schedule will erase the current one. Continue?'
-      );
-      if (!confirm) return;
-    }
-
     if (typeof numPlayers !== 'number') {
       alert('Please enter a valid number of players (must be divisible by 4).');
       return;
     }
     const generated = generateSchedule(numPlayers);
+    if (!generated) {
+      alert('Failed to generate schedule. Please check the number of players.');
+      return;
+    }
     setSchedule(generated);
 
     // Initialize default player names if not set
@@ -73,33 +103,34 @@ const PickleballScheduler = () => {
             </h1>
           </div>
 
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Number of Players (must be divisible by 4)
-              </label>
-              <input
-                type="number"
-                min="4"
-                // step="4"
-                value={numPlayers}
-                onChange={(e) => {
-                  e.target.value
-                    ? setNumPlayers(parseInt(e.target.value))
-                    : setNumPlayers('');
-                }}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-              />
-            </div>
+          <Toggle overRideShow={!schedule}>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Number of Players
+                </label>
+                <input
+                  type="number"
+                  min="4"
+                  value={numPlayers}
+                  onChange={(e) => {
+                    e.target.value
+                      ? setNumPlayers(parseInt(e.target.value))
+                      : setNumPlayers('');
+                  }}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                />
+              </div>
 
-            <button
-              onClick={handleGenerate}
-              className="flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors"
-            >
-              <Play className="w-5 h-5" />
-              Generate Schedule
-            </button>
-          </div>
+              <button
+                onClick={handleGenerate}
+                className="flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors"
+              >
+                <Play className="w-5 h-5" />
+                {schedule ? 'Regenerate' : 'Generate'} Schedule
+              </button>
+            </div>
+          </Toggle>
         </div>
 
         {schedule && typeof numPlayers === 'number' && (
