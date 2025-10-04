@@ -6,6 +6,7 @@ import { resolve } from 'node:path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: process.env.BASE_PATH || '/',
   plugins: [
     TanStackRouterVite({ autoCodeSplitting: true }),
     viteReact(),
