@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useAtom } from 'jotai';
 import { Calendar, Users } from 'lucide-react';
-import { numPlayersAtom, playerNamesAtom, scheduleAtom } from '../state';
+import { playerNamesAtom, scheduleAtom } from '../state';
 import {
   generateSchedule,
   type Match,
