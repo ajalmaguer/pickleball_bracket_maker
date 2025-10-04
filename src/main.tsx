@@ -16,7 +16,7 @@ const router = createRouter({
   scrollRestoration: true,
   defaultStructuralSharing: true,
   defaultPreloadStaleTime: 0,
-  basepath: import.meta.env.BASE_PATH || '/',
+  basepath: import.meta.env.VITE_BASE_PATH || '/',
 });
 
 // Register the router instance for type safety
@@ -29,7 +29,7 @@ declare module '@tanstack/react-router' {
 // Render the app
 const rootElement = document.getElementById('app');
 if (rootElement && !rootElement.innerHTML) {
-  console.log('import.meta.env.BASE_PATH =', import.meta.env.BASE_PATH);
+  console.log('import.meta.env.VITE_BASE_PATH =', import.meta.env.VITE_BASE_PATH);
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
