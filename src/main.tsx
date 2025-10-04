@@ -29,6 +29,7 @@ declare module '@tanstack/react-router' {
 // Render the app
 const rootElement = document.getElementById('app');
 if (rootElement && !rootElement.innerHTML) {
+  console.log('import.meta.env.BASE_PATH =', import.meta.env.BASE_PATH);
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
