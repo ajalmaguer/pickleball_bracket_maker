@@ -133,7 +133,6 @@ export function PlayerNamesInput() {
   };
 
   useEffect(() => {
-    console.log('Players length:', players.length);
     if (players.length > 0) {
       const lastIndex = players.length - 1;
       const lastInput = document.getElementById(`player-${lastIndex}`);

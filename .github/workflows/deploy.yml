@@ -32,7 +32,7 @@ jobs:
         run: npm ci  # Use 'yarn install --frozen-lockfile' for yarn or 'pnpm install --frozen-lockfile' for pnpm
 
       - name: Build
-        run: npm run build  # Adjust if your build command is different
+        run: npm run build -- --base=/${{ github.event.repository.name }}/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
