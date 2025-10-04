@@ -1,20 +1,13 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { atom, useAtom } from 'jotai';
-import { atomWithStorage } from 'jotai/utils';
-import { Calendar, Play, Users } from 'lucide-react';
-import type { FunctionComponent, ReactNode } from 'react';
-import { useState } from 'react';
+import { useAtom } from 'jotai';
+import { Calendar, Users } from 'lucide-react';
+import { numPlayersAtom, playerNamesAtom, scheduleAtom } from '../state';
 import {
   generateSchedule,
   type Match,
   type MatchWithoutByes,
-} from './generateSchedule';
-
-const numPlayersAtom = atom<string | number>(8);
-const scheduleAtom = atomWithStorage<ReturnType<
-  typeof generateSchedule
-> | null>('schedule', null);
-const playerNamesAtom = atomWithStorage<string[]>('playerNames', []);
+} from './-components/generateSchedule';
+import { PlayerNamesInput } from './-components/PlayerInput';
 
 export const Route = createFileRoute('/')({
   component: App,
@@ -25,44 +18,12 @@ function hasNoByes(match: Match | MatchWithoutByes): match is MatchWithoutByes {
   return team1.every((player) => !!player) && team2.every((player) => !!player);
 }
 
-const Toggle: FunctionComponent<{
-  overRideShow: boolean;
-  children: ReactNode;
-}> = ({ overRideShow, children }) => {
-  const [toggle, setToggle] = useState(false);
-
-  if (overRideShow || toggle) {
-    return (
-      <div className="mb-4">
-        <button
-          onClick={() => setToggle(false)}
-          className="flex items-center gap-2 bg-gray-200 text-gray-700 px-3 py-1 rounded-md font-medium border border-gray-300 hover:bg-gray-300 transition-colors text-sm"
-        >
-          Hide
-        </button>
-        {children}
-      </div>
-    );
-  }
-
-  if (!toggle) {
-    return (
-      <button
-        onClick={() => setToggle(true)}
-        className="flex items-center gap-2 bg-gray-200 text-gray-700 px-3 py-1 rounded-md font-medium border border-gray-300 hover:bg-gray-300 transition-colors text-sm"
-      >
-        Regenerate schedule
-      </button>
-    );
-  }
-};
-
 const PickleballScheduler = () => {
-  const [numPlayers, setNumPlayers] = useAtom(numPlayersAtom);
   const [schedule, setSchedule] = useAtom(scheduleAtom);
   const [playerNames, setPlayerNames] = useAtom(playerNamesAtom);
 
   const handleGenerate = () => {
+    const numPlayers = playerNames.length;
     if (typeof numPlayers !== 'number') {
       alert('Please enter a valid number of players (must be divisible by 4).');
       return;
@@ -75,91 +36,47 @@ const PickleballScheduler = () => {
     setSchedule(generated);
 
     // Initialize default player names if not set
-    if (playerNames.length !== numPlayers) {
+    if (!playerNames.length) {
       setPlayerNames(
         Array.from({ length: numPlayers }, (_, i) => `Player ${i + 1}`)
       );
     }
   };
 
-  const handlePlayerNameChange = (index: number, name: string) => {
-    const newNames = [...playerNames];
-    newNames[index] = name;
-    setPlayerNames(newNames);
-  };
-
   const getPlayerName = (num: number) => {
     return playerNames[num - 1] || `Player ${num}`;
   };
+
+  const generateButtonText = schedule
+    ? 'Regenerate bracket'
+    : 'Generate bracket';
+
+  console.log('playerNames =', playerNames);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 p-8">
       <div className="max-w-6xl mx-auto">
         <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
-          <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center gap-3">
             <Users className="w-8 h-8 text-green-600" />
             <h1 className="text-3xl font-bold text-gray-800">
-              Pickleball Round Robin Scheduler
+              Pickleball Bracket Maker
             </h1>
           </div>
-
-          <Toggle overRideShow={!schedule}>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Number of Players
-                </label>
-                <input
-                  type="number"
-                  min="4"
-                  value={numPlayers}
-                  onChange={(e) => {
-                    e.target.value
-                      ? setNumPlayers(parseInt(e.target.value))
-                      : setNumPlayers('');
-                  }}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                />
-              </div>
-
-              <button
-                onClick={handleGenerate}
-                className="flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors"
-              >
-                <Play className="w-5 h-5" />
-                {schedule ? 'Regenerate' : 'Generate'} Schedule
-              </button>
-            </div>
-          </Toggle>
         </div>
 
-        {schedule && typeof numPlayers === 'number' && (
-          <>
-            <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
-              <h2 className="text-xl font-bold text-gray-800 mb-4">
-                Player Names
-              </h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {Array.from({ length: numPlayers }, (_, i) => (
-                  <div key={i}>
-                    <label className="block text-sm font-medium text-gray-600 mb-1">
-                      Player {i + 1}
-                    </label>
-                    <input
-                      type="text"
-                      placeholder={`Player ${i + 1}`}
-                      value={playerNames[i] || ''}
-                      onChange={(e) =>
-                        handlePlayerNameChange(i, e.target.value)
-                      }
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </>
-        )}
+        <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+          <h2 className="text-xl font-bold text-gray-800 mb-4">Player Names</h2>
+          <div className="mb-8">
+            <PlayerNamesInput />
+          </div>
+          <button
+            onClick={handleGenerate}
+            className="flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors"
+          >
+            {generateButtonText}
+          </button>
+        </div>
 
         {schedule && (
           <>
