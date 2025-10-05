@@ -28,7 +28,7 @@ interface SortablePlayerItemProps {
   player: string;
   playersLength: number;
   onPlayerChange: (index: number, value: string) => void;
-  onEnterKey: (e: React.KeyboardEvent<HTMLInputElement>, index: number) => void;
+  onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>, index: number) => void;
   onRemove: (index: number) => void;
 }
 
@@ -38,7 +38,7 @@ function SortablePlayerItem({
   player,
   playersLength,
   onPlayerChange,
-  onEnterKey,
+  onKeyDown,
   onRemove,
 }: SortablePlayerItemProps) {
   const {
@@ -76,12 +76,12 @@ function SortablePlayerItem({
         type="text"
         value={player}
         onChange={(e) => onPlayerChange(index, e.target.value)}
-        onKeyDown={(e) => onEnterKey(e, index)}
+        onKeyDown={(e) => onKeyDown(e, index)}
         placeholder={index === 0 ? 'Enter names here' : ''}
         className="bg-transparent text-gray-900 text-lg placeholder-gray-400 focus:outline-none"
       />
       <div className="w-[30px] flex justify-center">
-        {playersLength > MIN_PLAYERS && player && (
+        {playersLength > MIN_PLAYERS && (
           <button
             onClick={() => onRemove(index)}
             className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -114,10 +114,10 @@ export function PlayerNamesInput() {
     setPlayers(newPlayers);
   };
 
-  const handleEnterKey = (
+  function handleEnter(
     e: React.KeyboardEvent<HTMLInputElement>,
     index: number
-  ) => {
+  ) {
     if (e.key !== 'Enter') {
       return;
     }
@@ -130,6 +130,33 @@ export function PlayerNamesInput() {
         nextInput.focus();
       }
     }
+  }
+
+  function handleBackspace(
+    e: React.KeyboardEvent<HTMLInputElement>,
+    index: number
+  ) {
+    if (e.key !== 'Backspace') {
+      return;
+    }
+    // if player value is empty, then remove this player and focus previous
+    if (players[index] !== '' || index === 0) {
+      return;
+    }
+    e.preventDefault();
+    removePlayer(index);
+    const prevInput = document.getElementById(`player-${index - 1}`);
+    if (prevInput) {
+      prevInput.focus();
+    }
+  }
+
+  const onKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    handleEnter(e, index);
+    handleBackspace(e, index);
   };
 
   useEffect(() => {
@@ -140,12 +167,12 @@ export function PlayerNamesInput() {
     }
   }, [players.length]);
 
-  const removePlayer = (index: number) => {
+  function removePlayer(index: number) {
     if (players.length > MIN_PLAYERS) {
       const newPlayers = players.filter((_, i) => i !== index);
       setPlayers(newPlayers);
     }
-  };
+  }
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
@@ -177,7 +204,7 @@ export function PlayerNamesInput() {
                 player={player}
                 playersLength={players.length}
                 onPlayerChange={handlePlayerChange}
-                onEnterKey={handleEnterKey}
+                onKeyDown={onKeyDown}
                 onRemove={removePlayer}
               />
             ))}
