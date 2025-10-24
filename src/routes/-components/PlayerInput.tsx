@@ -95,7 +95,7 @@ function SortablePlayerItem({
 
 export function PlayerNamesInput() {
   const [players, setPlayers] = useAtom(playerNamesAtom);
-  const [active, setActive] = useState<Active | null>(null);
+  const [, setActive] = useState<Active | null>(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
