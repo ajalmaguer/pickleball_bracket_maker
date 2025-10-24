@@ -2,20 +2,18 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useAtom } from 'jotai';
 import { Calendar, Users } from 'lucide-react';
 import { playerNamesAtom, scheduleAtom } from '../state';
-import {
-  generateSchedule,
-  type Match,
-  type MatchWithoutByes,
-} from './-components/generateSchedule';
+import { generateSchedule } from './-components/generateSchedule';
 import { PlayerNamesInput } from './-components/PlayerInput';
 
 export const Route = createFileRoute('/')({
   component: App,
 });
 
-function hasNoByes(match: Match | MatchWithoutByes): match is MatchWithoutByes {
-  const { team1, team2 } = match;
-  return team1.every((player) => !!player) && team2.every((player) => !!player);
+// function hasNoByes(match: Match | MatchWithoutByes): match is MatchWithoutByes {
+function hasNoByes(something: any) {
+  return true;
+  // const { team1, team2 } = match;
+  // return team1.every((player) => !!player) && team2.every((player) => !!player);
 }
 
 const PickleballScheduler = () => {
@@ -24,10 +22,7 @@ const PickleballScheduler = () => {
 
   const handleGenerate = () => {
     const numPlayers = playerNames.length;
-    if (typeof numPlayers !== 'number') {
-      alert('Please enter a valid number of players (must be divisible by 4).');
-      return;
-    }
+
     const generated = generateSchedule(numPlayers);
     if (!generated) {
       alert('Failed to generate schedule. Please check the number of players.');
@@ -44,7 +39,7 @@ const PickleballScheduler = () => {
   };
 
   const getPlayerName = (num: number) => {
-    return playerNames[num - 1] || `Player ${num}`;
+    return playerNames[num - 1] || `Bye`;
   };
 
   const generateButtonText = schedule
@@ -82,13 +77,12 @@ const PickleballScheduler = () => {
               <div className="flex items-center gap-3 mb-6">
                 <Calendar className="w-6 h-6 text-green-600" />
                 <h2 className="text-2xl font-bold text-gray-800">
-                  Schedule ({schedule.length} rounds, {schedule[0].length}{' '}
-                  courts)
+                  Schedule ({schedule.games.length} rounds)
                 </h2>
               </div>
 
               <div className="space-y-6">
-                {schedule.map((round, roundIdx) => (
+                {schedule.games.map((round, roundIdx) => (
                   <div
                     key={roundIdx}
                     className="border-l-4 border-green-500 px-6 py-4 bg-gray-50 rounded-r-lg"
@@ -97,21 +91,21 @@ const PickleballScheduler = () => {
                       Round {roundIdx + 1}
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {round.map((match, matchIdx) => (
+                      {round.map((game, matchIdx) => (
                         <div
                           key={matchIdx}
                           className="bg-white p-4 rounded-lg shadow border border-gray-200"
                         >
                           <div className="text-sm font-semibold text-green-600 mb-3">
-                            Court {match.court}
+                            Court {game.court}
                           </div>
-                          {hasNoByes(match) ? (
+                          {hasNoByes(game) ? (
                             <>
                               <div className="space-y-2">
                                 <div className="flex items-center gap-2">
                                   <span className="text-blue-600 font-medium">
-                                    {getPlayerName(match.team1[0])} &{' '}
-                                    {getPlayerName(match.team1[1])}
+                                    {getPlayerName(game.team1[0])} &{' '}
+                                    {getPlayerName(game.team1[1])}
                                   </span>
                                 </div>
                                 <div className="text-gray-400 text-xs font-semibold">
@@ -119,8 +113,8 @@ const PickleballScheduler = () => {
                                 </div>
                                 <div className="flex items-center gap-2">
                                   <span className="text-purple-600 font-medium">
-                                    {getPlayerName(match.team2[0])} &{' '}
-                                    {getPlayerName(match.team2[1])}
+                                    {getPlayerName(game.team2[0])} &{' '}
+                                    {getPlayerName(game.team2[1])}
                                   </span>
                                 </div>
                               </div>
@@ -129,7 +123,7 @@ const PickleballScheduler = () => {
                             <>
                               <div>Byes:</div>
                               <ul className="list-disc list-inside text-gray-600">
-                                {[...match.team1, ...match.team2]
+                                {[...game.team1, ...game.team2]
                                   .filter((p) => p !== null)
                                   .map((p) => (
                                     <li key={p}>{getPlayerName(p!)}</li>
@@ -156,8 +150,8 @@ const PickleballScheduler = () => {
                 <li>✓ Each player opposes each other player twice</li>
                 <li>✓ All players play in every round (no sitting out)</li>
                 <li>
-                  ✓ Uses {schedule[0].length} court
-                  {schedule[0].length > 1 ? 's' : ''} simultaneously
+                  ✓ Uses {schedule.games[0].length} court
+                  {schedule.games[0].length > 1 ? 's' : ''} simultaneously
                 </li>
               </ul>
             </div>

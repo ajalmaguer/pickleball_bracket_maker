@@ -1,14 +1,11 @@
 import { playerNamesAtom } from '@/state';
-import { useAtom } from 'jotai';
-import { GripVertical, X } from 'lucide-react';
-import { useEffect } from 'react';
 import {
   DndContext,
-  closestCenter,
   KeyboardSensor,
   PointerSensor,
   useSensor,
   useSensors,
+  type Active,
   type DragEndEvent,
 } from '@dnd-kit/core';
 import {
@@ -16,9 +13,11 @@ import {
   SortableContext,
   sortableKeyboardCoordinates,
   useSortable,
-  verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { useAtom } from 'jotai';
+import { GripVertical, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 const MIN_PLAYERS = 4;
 
@@ -96,6 +95,7 @@ function SortablePlayerItem({
 
 export function PlayerNamesInput() {
   const [players, setPlayers] = useAtom(playerNamesAtom);
+  const [active, setActive] = useState<Active | null>(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -182,19 +182,22 @@ export function PlayerNamesInput() {
       const newIndex = players.findIndex((_, i) => `player-${i}` === over.id);
       setPlayers(arrayMove(players, oldIndex, newIndex));
     }
+    setActive(null);
   };
 
   return (
     <>
       <DndContext
         sensors={sensors}
-        collisionDetection={closestCenter}
+        onDragStart={({ active }) => {
+          setActive(active);
+        }}
         onDragEnd={handleDragEnd}
+        onDragCancel={() => {
+          setActive(null);
+        }}
       >
-        <SortableContext
-          items={players.map((_, i) => `player-${i}`)}
-          strategy={verticalListSortingStrategy}
-        >
+        <SortableContext items={players.map((_, i) => `player-${i}`)}>
           <div className="space-y-3">
             {players.map((player, index) => (
               <SortablePlayerItem

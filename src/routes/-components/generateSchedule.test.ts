@@ -5,7 +5,7 @@ import {
   createPlayers,
   rotatePlayers,
   generateSchedule,
-} from './generateScheduleV2';
+} from './generateSchedule';
 
 describe('createGamesFromPairs', () => {
   it('creates pairs and games for 8 players in a circle pairing format', () => {
