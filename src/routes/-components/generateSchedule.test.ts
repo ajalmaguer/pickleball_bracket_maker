@@ -6,6 +6,7 @@ import {
   rotatePlayers,
   generateSchedule,
 } from './generateSchedule';
+import { validateSchedule } from './validateSchedule';
 
 describe('createGamesFromPairs', () => {
   describe('for 8 players', () => {
@@ -35,13 +36,13 @@ describe('createGamesFromPairs', () => {
       expect(games).toEqual([
         {
           court: 1,
-          team1: [1, 8],
-          team2: [2, 3],
+          team1: [1, 2],
+          team2: [8, 3],
         },
         {
           court: 2,
-          team1: [7, 6],
-          team2: [4, 5],
+          team1: [7, 4],
+          team2: [6, 5],
         },
       ]);
     });
@@ -74,13 +75,13 @@ describe('createGamesFromPairs', () => {
       expect(games).toEqual([
         {
           court: 1,
-          team1: [1, 7],
-          team2: [2, 3],
+          team1: [1, 2],
+          team2: [7, 3],
         },
         {
           court: 2,
-          team1: [6, 5],
-          team2: [4, null],
+          team1: [6, 4],
+          team2: [5, null],
         },
       ]);
     });
@@ -113,13 +114,13 @@ describe('createGamesFromPairs', () => {
       expect(games).toEqual([
         {
           court: 1,
-          team1: [1, 6],
-          team2: [2, 3],
+          team1: [1, 2],
+          team2: [6, 3],
         },
         {
           court: 2,
-          team1: [5, null],
-          team2: [4, null],
+          team1: [5, 4],
+          team2: [null, null],
         },
       ]);
     });
@@ -152,13 +153,13 @@ describe('createGamesFromPairs', () => {
       expect(games).toEqual([
         {
           court: 1,
-          team1: [1, 5],
-          team2: [2, 3],
+          team1: [1, 2],
+          team2: [5, 3],
         },
         {
           court: 2,
-          team1: [null, null],
-          team2: [4, null],
+          team1: [null, 4],
+          team2: [null, null],
         },
       ]);
     });
@@ -190,79 +191,30 @@ describe('rotatePlayers', () => {
     expect(games).toEqual([
       {
         court: 1,
-        team1: [1, 2],
-        team2: [3, 4],
+        team1: [1, 3],
+        team2: [2, 4],
       },
       {
         court: 2,
-        team1: [8, 7],
-        team2: [5, 6],
+        team1: [8, 5],
+        team2: [7, 6],
       },
     ]);
   });
 });
 
 describe('generateSchedule', () => {
-  it('generates a full schedule for 8 players over 7 rounds', () => {
-    // ROUND 1
-    // 1  2
-    // 8  3
-    // 7  4
-    // 6  5
-    // Game 1: 1&8 vs 2&3
-    // Game 2: 7&6 vs 4&5
-    //
-    // ROUND 2
-    // 1  3
-    // 2  4
-    // 8  5
-    // 7  6
-    // Game 1: 1&2 vs 3&4
-    // Game 2: 8&7 vs 5&6
-    //
-    // ROUND 3
-    // 1  4
-    // 3  5
-    // 2  6
-    // 8  7
-    // Game 1: 1&3 vs 4&5
-    // Game 2: 2&8 vs 6&7
-    //
-    // ROUND 4
-    // 1  5
-    // 4  6
-    // 3  7
-    // 2  8
-    // Game 1: 1&4 vs 5&6
-    // Game 2: 3&2 vs 7&8
-    //
-    // ROUND 5
-    // 1  6
-    // 5  7
-    // 4  8
-    // 3  2
-    // Game 1: 1&5 vs 6&7
-    // Game 2: 4&3 vs 8&2
-    //
-    // ROUND 6
-    // 1  7
-    // 6  8
-    // 5  2
-    // 4  3
-    // Game 1: 1&6 vs 7&8
-    // Game 2: 5&4 vs 2&3
-    //
-    // ROUND 7
-    // 1  8
-    // 7  2
-    // 6  3
-    // 5  4
-    // Game 1: 1&7 vs 8&2
-    // Game 2: 6&5 vs 3&4
+  describe('for 8 players', () => {
+    it('generates a full schedule for 8 players over 7 rounds', () => {
+      const schedule = generateSchedule(8);
+      expect(schedule.games.length).toBe(7);
+      expect(schedule).toMatchSnapshot();
+    });
 
-    const schedule = generateSchedule(8);
-    expect(schedule.games.length).toBe(7);
-    expect(schedule).toMatchSnapshot();
+    it('makes sure everyone plays with everyone else', () => {
+      const schedule = generateSchedule(8);
+      expect(validateSchedule(schedule)).toMatchSnapshot();
+    });
   });
 
   it('generates a schedule for 4 players over 3 rounds', () => {
@@ -282,7 +234,6 @@ describe('generateSchedule', () => {
   describe('for 7 players', () => {
     it('generates a schedule for 7 players over 6 rounds because one the players gets a bye each round', () => {
       const schedule = generateSchedule(7);
-      console.log(JSON.stringify(schedule, null, 2));
       expect(schedule.games.length).toBe(6);
       expect(schedule).toMatchSnapshot();
     });

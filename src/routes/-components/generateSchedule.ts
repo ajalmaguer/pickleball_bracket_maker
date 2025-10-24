@@ -100,8 +100,8 @@ export function createGamesFromPairs(pairs: Pairing[]): Game[] {
     if (i + 1 < pairs.length) {
       games.push({
         court: i / 2 + 1,
-        team1: [pairs[i].left, pairs[i + 1].left],
-        team2: [pairs[i].right, pairs[i + 1].right],
+        team1: [pairs[i].left, pairs[i].right],
+        team2: [pairs[i + 1].left, pairs[i + 1].right],
       });
     }
   }
@@ -135,7 +135,9 @@ export function generateSchedule(numPlayersInput: number): Schedule {
 
   for (let round = 0; round < numberOfRounds; round++) {
     const pairs = createCirclePairs(players);
+    // console.table(pairs);
     const games = createGamesFromPairs(pairs);
+    // console.table(games);
     schedule.games.push(games);
     players = rotatePlayers(players);
   }

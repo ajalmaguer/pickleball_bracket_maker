@@ -8,10 +8,10 @@ exports[`generateSchedule > for 5 players > generates a schedule for 6 players o
         "court": 1,
         "team1": [
           1,
-          5,
+          2,
         ],
         "team2": [
-          2,
+          5,
           3,
         ],
       },
@@ -19,34 +19,10 @@ exports[`generateSchedule > for 5 players > generates a schedule for 6 players o
         "court": 2,
         "team1": [
           null,
-          null,
-        ],
-        "team2": [
-          4,
-          null,
-        ],
-      },
-    ],
-    [
-      {
-        "court": 1,
-        "team1": [
-          1,
-          2,
-        ],
-        "team2": [
-          3,
           4,
         ],
-      },
-      {
-        "court": 2,
-        "team1": [
-          null,
-          null,
-        ],
         "team2": [
-          5,
+          null,
           null,
         ],
       },
@@ -59,18 +35,18 @@ exports[`generateSchedule > for 5 players > generates a schedule for 6 players o
           3,
         ],
         "team2": [
+          2,
           4,
-          5,
         ],
       },
       {
         "court": 2,
         "team1": [
           null,
-          null,
+          5,
         ],
         "team2": [
-          2,
+          null,
           null,
         ],
       },
@@ -83,7 +59,31 @@ exports[`generateSchedule > for 5 players > generates a schedule for 6 players o
           4,
         ],
         "team2": [
+          3,
           5,
+        ],
+      },
+      {
+        "court": 2,
+        "team1": [
+          null,
+          2,
+        ],
+        "team2": [
+          null,
+          null,
+        ],
+      },
+    ],
+    [
+      {
+        "court": 1,
+        "team1": [
+          1,
+          5,
+        ],
+        "team2": [
+          4,
           2,
         ],
       },
@@ -91,10 +91,10 @@ exports[`generateSchedule > for 5 players > generates a schedule for 6 players o
         "court": 2,
         "team1": [
           null,
-          null,
+          3,
         ],
         "team2": [
-          3,
+          null,
           null,
         ],
       },
@@ -111,10 +111,10 @@ exports[`generateSchedule > for 7 players > generates a schedule for 7 players o
         "court": 1,
         "team1": [
           1,
-          7,
+          2,
         ],
         "team2": [
-          2,
+          7,
           3,
         ],
       },
@@ -122,31 +122,7 @@ exports[`generateSchedule > for 7 players > generates a schedule for 7 players o
         "court": 2,
         "team1": [
           6,
-          5,
-        ],
-        "team2": [
           4,
-          null,
-        ],
-      },
-    ],
-    [
-      {
-        "court": 1,
-        "team1": [
-          1,
-          2,
-        ],
-        "team2": [
-          3,
-          4,
-        ],
-      },
-      {
-        "court": 2,
-        "team1": [
-          7,
-          6,
         ],
         "team2": [
           5,
@@ -162,15 +138,15 @@ exports[`generateSchedule > for 7 players > generates a schedule for 7 players o
           3,
         ],
         "team2": [
+          2,
           4,
-          5,
         ],
       },
       {
         "court": 2,
         "team1": [
-          2,
           7,
+          5,
         ],
         "team2": [
           6,
@@ -186,15 +162,15 @@ exports[`generateSchedule > for 7 players > generates a schedule for 7 players o
           4,
         ],
         "team2": [
+          3,
           5,
-          6,
         ],
       },
       {
         "court": 2,
         "team1": [
-          3,
           2,
+          6,
         ],
         "team2": [
           7,
@@ -210,15 +186,15 @@ exports[`generateSchedule > for 7 players > generates a schedule for 7 players o
           5,
         ],
         "team2": [
+          4,
           6,
-          7,
         ],
       },
       {
         "court": 2,
         "team1": [
-          4,
           3,
+          7,
         ],
         "team2": [
           2,
@@ -234,7 +210,31 @@ exports[`generateSchedule > for 7 players > generates a schedule for 7 players o
           6,
         ],
         "team2": [
+          5,
           7,
+        ],
+      },
+      {
+        "court": 2,
+        "team1": [
+          4,
+          2,
+        ],
+        "team2": [
+          3,
+          null,
+        ],
+      },
+    ],
+    [
+      {
+        "court": 1,
+        "team1": [
+          1,
+          7,
+        ],
+        "team2": [
+          6,
           2,
         ],
       },
@@ -242,15 +242,341 @@ exports[`generateSchedule > for 7 players > generates a schedule for 7 players o
         "court": 2,
         "team1": [
           5,
-          4,
+          3,
         ],
         "team2": [
-          3,
+          4,
           null,
         ],
       },
     ],
   ],
+}
+`;
+
+exports[`generateSchedule > for 8 players > generates a full schedule for 8 players over 7 rounds 1`] = `
+{
+  "games": [
+    [
+      {
+        "court": 1,
+        "team1": [
+          1,
+          2,
+        ],
+        "team2": [
+          8,
+          3,
+        ],
+      },
+      {
+        "court": 2,
+        "team1": [
+          7,
+          4,
+        ],
+        "team2": [
+          6,
+          5,
+        ],
+      },
+    ],
+    [
+      {
+        "court": 1,
+        "team1": [
+          1,
+          3,
+        ],
+        "team2": [
+          2,
+          4,
+        ],
+      },
+      {
+        "court": 2,
+        "team1": [
+          8,
+          5,
+        ],
+        "team2": [
+          7,
+          6,
+        ],
+      },
+    ],
+    [
+      {
+        "court": 1,
+        "team1": [
+          1,
+          4,
+        ],
+        "team2": [
+          3,
+          5,
+        ],
+      },
+      {
+        "court": 2,
+        "team1": [
+          2,
+          6,
+        ],
+        "team2": [
+          8,
+          7,
+        ],
+      },
+    ],
+    [
+      {
+        "court": 1,
+        "team1": [
+          1,
+          5,
+        ],
+        "team2": [
+          4,
+          6,
+        ],
+      },
+      {
+        "court": 2,
+        "team1": [
+          3,
+          7,
+        ],
+        "team2": [
+          2,
+          8,
+        ],
+      },
+    ],
+    [
+      {
+        "court": 1,
+        "team1": [
+          1,
+          6,
+        ],
+        "team2": [
+          5,
+          7,
+        ],
+      },
+      {
+        "court": 2,
+        "team1": [
+          4,
+          8,
+        ],
+        "team2": [
+          3,
+          2,
+        ],
+      },
+    ],
+    [
+      {
+        "court": 1,
+        "team1": [
+          1,
+          7,
+        ],
+        "team2": [
+          6,
+          8,
+        ],
+      },
+      {
+        "court": 2,
+        "team1": [
+          5,
+          2,
+        ],
+        "team2": [
+          4,
+          3,
+        ],
+      },
+    ],
+    [
+      {
+        "court": 1,
+        "team1": [
+          1,
+          8,
+        ],
+        "team2": [
+          7,
+          2,
+        ],
+      },
+      {
+        "court": 2,
+        "team1": [
+          6,
+          3,
+        ],
+        "team2": [
+          5,
+          4,
+        ],
+      },
+    ],
+  ],
+}
+`;
+
+exports[`generateSchedule > for 8 players > makes sure everyone plays with everyone else 1`] = `
+{
+  "1": {
+    "opponents": {
+      "2": 2,
+      "3": 2,
+      "4": 2,
+      "5": 2,
+      "6": 2,
+      "7": 2,
+      "8": 2,
+    },
+    "partners": {
+      "2": 1,
+      "3": 1,
+      "4": 1,
+      "5": 1,
+      "6": 1,
+      "7": 1,
+      "8": 1,
+    },
+  },
+  "2": {
+    "opponents": {
+      "1": 2,
+      "3": 4,
+      "4": 2,
+      "7": 2,
+      "8": 4,
+    },
+    "partners": {
+      "1": 1,
+      "3": 1,
+      "4": 1,
+      "5": 1,
+      "6": 1,
+      "7": 1,
+      "8": 1,
+    },
+  },
+  "3": {
+    "opponents": {
+      "1": 2,
+      "2": 4,
+      "4": 4,
+      "5": 2,
+      "8": 2,
+    },
+    "partners": {
+      "1": 1,
+      "2": 1,
+      "4": 1,
+      "5": 1,
+      "6": 1,
+      "7": 1,
+      "8": 1,
+    },
+  },
+  "4": {
+    "opponents": {
+      "1": 2,
+      "2": 2,
+      "3": 4,
+      "5": 4,
+      "6": 2,
+    },
+    "partners": {
+      "1": 1,
+      "2": 1,
+      "3": 1,
+      "5": 1,
+      "6": 1,
+      "7": 1,
+      "8": 1,
+    },
+  },
+  "5": {
+    "opponents": {
+      "1": 2,
+      "3": 2,
+      "4": 4,
+      "6": 4,
+      "7": 2,
+    },
+    "partners": {
+      "1": 1,
+      "2": 1,
+      "3": 1,
+      "4": 1,
+      "6": 1,
+      "7": 1,
+      "8": 1,
+    },
+  },
+  "6": {
+    "opponents": {
+      "1": 2,
+      "4": 2,
+      "5": 4,
+      "7": 4,
+      "8": 2,
+    },
+    "partners": {
+      "1": 1,
+      "2": 1,
+      "3": 1,
+      "4": 1,
+      "5": 1,
+      "7": 1,
+      "8": 1,
+    },
+  },
+  "7": {
+    "opponents": {
+      "1": 2,
+      "2": 2,
+      "5": 2,
+      "6": 4,
+      "8": 4,
+    },
+    "partners": {
+      "1": 1,
+      "2": 1,
+      "3": 1,
+      "4": 1,
+      "5": 1,
+      "6": 1,
+      "8": 1,
+    },
+  },
+  "8": {
+    "opponents": {
+      "1": 2,
+      "2": 4,
+      "3": 2,
+      "6": 2,
+      "7": 4,
+    },
+    "partners": {
+      "1": 1,
+      "2": 1,
+      "3": 1,
+      "4": 1,
+      "5": 1,
+      "6": 1,
+      "7": 1,
+    },
+  },
 }
 `;
 
@@ -262,10 +588,10 @@ exports[`generateSchedule > generates a full schedule for 8 players over 7 round
         "court": 1,
         "team1": [
           1,
-          8,
+          2,
         ],
         "team2": [
-          2,
+          8,
           3,
         ],
       },
@@ -273,35 +599,11 @@ exports[`generateSchedule > generates a full schedule for 8 players over 7 round
         "court": 2,
         "team1": [
           7,
-          6,
-        ],
-        "team2": [
-          4,
-          5,
-        ],
-      },
-    ],
-    [
-      {
-        "court": 1,
-        "team1": [
-          1,
-          2,
-        ],
-        "team2": [
-          3,
           4,
         ],
-      },
-      {
-        "court": 2,
-        "team1": [
-          8,
-          7,
-        ],
         "team2": [
-          5,
           6,
+          5,
         ],
       },
     ],
@@ -313,19 +615,19 @@ exports[`generateSchedule > generates a full schedule for 8 players over 7 round
           3,
         ],
         "team2": [
+          2,
           4,
-          5,
         ],
       },
       {
         "court": 2,
         "team1": [
-          2,
           8,
+          5,
         ],
         "team2": [
-          6,
           7,
+          6,
         ],
       },
     ],
@@ -337,19 +639,19 @@ exports[`generateSchedule > generates a full schedule for 8 players over 7 round
           4,
         ],
         "team2": [
+          3,
           5,
-          6,
         ],
       },
       {
         "court": 2,
         "team1": [
-          3,
           2,
+          6,
         ],
         "team2": [
-          7,
           8,
+          7,
         ],
       },
     ],
@@ -361,7 +663,31 @@ exports[`generateSchedule > generates a full schedule for 8 players over 7 round
           5,
         ],
         "team2": [
+          4,
           6,
+        ],
+      },
+      {
+        "court": 2,
+        "team1": [
+          3,
+          7,
+        ],
+        "team2": [
+          2,
+          8,
+        ],
+      },
+    ],
+    [
+      {
+        "court": 1,
+        "team1": [
+          1,
+          6,
+        ],
+        "team2": [
+          5,
           7,
         ],
       },
@@ -369,10 +695,10 @@ exports[`generateSchedule > generates a full schedule for 8 players over 7 round
         "court": 2,
         "team1": [
           4,
-          3,
+          8,
         ],
         "team2": [
-          8,
+          3,
           2,
         ],
       },
@@ -382,10 +708,10 @@ exports[`generateSchedule > generates a full schedule for 8 players over 7 round
         "court": 1,
         "team1": [
           1,
-          6,
+          7,
         ],
         "team2": [
-          7,
+          6,
           8,
         ],
       },
@@ -393,10 +719,10 @@ exports[`generateSchedule > generates a full schedule for 8 players over 7 round
         "court": 2,
         "team1": [
           5,
+          2,
+        ],
+        "team2": [
           4,
-        ],
-        "team2": [
-          2,
           3,
         ],
       },
@@ -406,10 +732,10 @@ exports[`generateSchedule > generates a full schedule for 8 players over 7 round
         "court": 1,
         "team1": [
           1,
-          7,
+          8,
         ],
         "team2": [
-          8,
+          7,
           2,
         ],
       },
@@ -417,10 +743,10 @@ exports[`generateSchedule > generates a full schedule for 8 players over 7 round
         "court": 2,
         "team1": [
           6,
-          5,
+          3,
         ],
         "team2": [
-          3,
+          5,
           4,
         ],
       },
@@ -437,24 +763,11 @@ exports[`generateSchedule > generates a schedule for 4 players over 3 rounds 1`]
         "court": 1,
         "team1": [
           1,
-          4,
-        ],
-        "team2": [
-          2,
-          3,
-        ],
-      },
-    ],
-    [
-      {
-        "court": 1,
-        "team1": [
-          1,
           2,
         ],
         "team2": [
-          3,
           4,
+          3,
         ],
       },
     ],
@@ -466,7 +779,20 @@ exports[`generateSchedule > generates a schedule for 4 players over 3 rounds 1`]
           3,
         ],
         "team2": [
+          2,
           4,
+        ],
+      },
+    ],
+    [
+      {
+        "court": 1,
+        "team1": [
+          1,
+          4,
+        ],
+        "team2": [
+          3,
           2,
         ],
       },
