@@ -141,23 +141,6 @@ const PickleballScheduler = () => {
                 ))}
               </div>
             </div>
-
-            <div className="mt-8 bg-blue-50 border border-blue-200 rounded-xl p-6">
-              <h3 className="font-semibold text-blue-900 mb-2">
-                Schedule Properties:
-              </h3>
-              <ul className="text-sm text-blue-800 space-y-1">
-                <li>
-                  ✓ Each player partners with every other player exactly once
-                </li>
-                <li>✓ Each player opposes each other player twice</li>
-                <li>✓ All players play in every round (no sitting out)</li>
-                <li>
-                  ✓ Uses {schedule.games[0].length} court
-                  {schedule.games[0].length > 1 ? 's' : ''} simultaneously
-                </li>
-              </ul>
-            </div>
           </>
         )}
       </div>
