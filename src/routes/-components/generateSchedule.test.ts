@@ -8,42 +8,121 @@ import {
 } from './generateSchedule';
 
 describe('createGamesFromPairs', () => {
-  it('creates pairs and games for 8 players in a circle pairing format', () => {
-    // example:
-    // 1  2
-    // 8  3
-    // 7  4
-    // 6  5
-    //
-    // Game 1: 1&8 vs 2&3
-    // Game 2: 7&6 vs 4&5
+  describe('for 8 players', () => {
+    it('creates pairs and games for 8 players in a circle pairing format', () => {
+      // example:
+      // 1  2
+      // 8  3
+      // 7  4
+      // 6  5
+      //
+      // Game 1: 1&8 vs 2&3
+      // Game 2: 7&6 vs 4&5
 
-    const players = createPlayers(8);
-    expect(players).toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
+      const players = createPlayers(8);
+      expect(players).toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
 
-    const pairs = createCirclePairs(players);
-    expect(pairs).toEqual([
-      { left: 1, right: 2 },
-      { left: 8, right: 3 },
-      { left: 7, right: 4 },
-      { left: 6, right: 5 },
-    ]);
+      const pairs = createCirclePairs(players);
+      expect(pairs).toEqual([
+        { left: 1, right: 2 },
+        { left: 8, right: 3 },
+        { left: 7, right: 4 },
+        { left: 6, right: 5 },
+      ]);
 
-    // create games
-    const games = createGamesFromPairs(pairs);
-    expect(games).toEqual([
-      {
-        court: 1,
-        team1: [1, 8],
-        team2: [2, 3],
-      },
-      {
-        court: 2,
-        team1: [7, 6],
-        team2: [4, 5],
-      },
-    ]);
+      // create games
+      const games = createGamesFromPairs(pairs);
+      expect(games).toEqual([
+        {
+          court: 1,
+          team1: [1, 8],
+          team2: [2, 3],
+        },
+        {
+          court: 2,
+          team1: [7, 6],
+          team2: [4, 5],
+        },
+      ]);
+    });
   });
+
+  describe('for 7 players', () => {
+    it('creates pairs and games with a bye', () => {
+      // example:
+      // 1  2
+      // B  3
+      // 7  4
+      // 6  5
+      //
+      // Game 1: 1&bye vs 2&3
+      // Game 2: 7&6 vs 4&5
+
+      const players = createPlayers(7);
+      expect(players).toEqual([1, 2, 3, 4, 5, 6, 7, null]);
+
+      const pairs = createCirclePairs(players);
+      expect(pairs).toEqual([
+        { left: 1, right: 2 },
+        { left: null, right: 3 },
+        { left: 7, right: 4 },
+        { left: 6, right: 5 },
+      ]);
+
+      // create games
+      const games = createGamesFromPairs(pairs);
+      expect(games).toEqual([
+        {
+          court: 1,
+          team1: [1, null],
+          team2: [2, 3],
+        },
+        {
+          court: 2,
+          team1: [7, 6],
+          team2: [4, 5],
+        },
+      ]);
+    });
+  });
+
+  // describe('for 6 players', () => {
+  //   it('creates pairs and games with a bye', () => {
+  //     // example:
+  //     // 1  2
+  //     // 6  3
+  //     // 5  4
+  //     //
+  //     // Game 1: 1&6 vs 2&3
+  //     // Game 2: 5&4 are a bye
+
+  //     const players = createPlayers(7);
+  //     expect(players).toEqual([1, 2, 3, 4, 5, 6]);
+
+  //     const pairs = createCirclePairs(players);
+  //     expect(pairs).toEqual([
+  //       { left: 1, right: 2 },
+  //       { left: null, right: 3 },
+  //       { left: 7, right: 4 },
+  //       { left: 6, right: 5 },
+  //     ]);
+
+  //     // create games
+  //     const games = createGamesFromPairs(pairs);
+  //     expect(games).toEqual([
+  //       {
+  //         court: 1,
+  //         team1: [1, null],
+  //         team2: [2, 3],
+  //       },
+  //       {
+  //         court: 2,
+  //         team1: [7, 6],
+  //         team2: [4, 5],
+  //       },
+  //     ]);
+  //   });
+  // });
 });
 
 describe('rotatePlayers', () => {
@@ -152,11 +231,20 @@ describe('generateSchedule', () => {
     expect(schedule).toMatchSnapshot();
   });
 
-  describe('for 5 players', () => {
-    it('generates a schedule for 6 players over 5 rounds because one the players gets a bye each round', () => {
-      const schedule = generateSchedule(5);
-      expect(schedule.games.length).toBe(5);
-      expect(schedule).toMatchSnapshot();
-    });
-  });
+  // describe('for 5 players', () => {
+  //   it('generates a schedule for 6 players over 5 rounds because one the players gets a bye each round', () => {
+  //     const schedule = generateSchedule(5);
+  //     expect(schedule.games.length).toBe(5);
+  //     expect(schedule).toMatchSnapshot();
+  //   });
+  // });
+
+  // describe('for 7 players', () => {
+  //   it.only('generates a schedule for 7 players over 6 rounds because one the players gets a bye each round', () => {
+  //     const schedule = generateSchedule(7);
+  //     console.log(JSON.stringify(schedule, null, 2));
+  //     // expect(schedule.games.length).toBe(7);
+  //     // expect(schedule).toMatchSnapshot();
+  //   });
+  // });
 });

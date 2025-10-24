@@ -1,22 +1,27 @@
 export interface Pairing {
-  left: number;
-  right: number;
+  left: number | null;
+  right: number | null;
 }
 export interface Game {
   court: number;
-  team1: [number, number];
-  team2: [number, number];
+  team1: [number | null, number | null];
+  team2: [number | null, number | null];
 }
-
 export interface Schedule {
   games: Game[][];
 }
 
-export function createPlayers(numPlayers: number): number[] {
-  return Array.from({ length: numPlayers }, (_, i) => i + 1);
+export function createPlayers(numPlayers: number): (number | null)[] {
+  if (!Number.isInteger(numPlayers) || numPlayers <= 0) return [];
+  const arr: (number | null)[] = Array.from(
+    { length: numPlayers },
+    (_, i) => i + 1
+  );
+  if (numPlayers % 2 !== 0) arr.push(null);
+  return arr;
 }
 
-export function createCirclePairs(players: number[]) {
+export function createCirclePairs(players: (number | null)[]) {
   const n = players.length;
   const pairs = [];
 
@@ -60,7 +65,7 @@ export function createGamesFromPairs(pairs: Pairing[]): Game[] {
   return games;
 }
 
-export function rotatePlayers(_players: number[]): number[] {
+export function rotatePlayers(_players: (number | null)[]): (number | null)[] {
   const players = [..._players];
   if (players.length <= 1) {
     return [...players];
@@ -76,8 +81,9 @@ export function rotatePlayers(_players: number[]): number[] {
 }
 
 export function generateSchedule(numPlayersInput: number): Schedule {
-  const numPlayers =
-    numPlayersInput % 2 === 0 ? numPlayersInput : numPlayersInput + 1;
+  const numPlayers = numPlayersInput;
+  // const numPlayers =
+  //   numPlayersInput % 2 === 0 ? numPlayersInput : numPlayersInput + 1;
 
   const numberOfRounds = numPlayers - 1;
   let players = createPlayers(numPlayers);
