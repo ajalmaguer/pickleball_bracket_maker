@@ -152,9 +152,11 @@ describe('generateSchedule', () => {
     expect(schedule).toMatchSnapshot();
   });
 
-  it('generates a schedule for 5 players over 4 rounds', () => {
-    const schedule = generateSchedule(5);
-    expect(schedule.games.length).toBe(4);
-    expect(schedule).toMatchSnapshot();
+  describe('for 5 players', () => {
+    it('generates a schedule for 6 players over 5 rounds because one the players gets a bye each round', () => {
+      const schedule = generateSchedule(5);
+      expect(schedule.games.length).toBe(5);
+      expect(schedule).toMatchSnapshot();
+    });
   });
 });

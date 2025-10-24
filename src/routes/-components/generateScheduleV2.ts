@@ -75,7 +75,10 @@ export function rotatePlayers(_players: number[]): number[] {
   return rotated;
 }
 
-export function generateSchedule(numPlayers: number): Schedule {
+export function generateSchedule(numPlayersInput: number): Schedule {
+  const numPlayers =
+    numPlayersInput % 2 === 0 ? numPlayersInput : numPlayersInput + 1;
+
   const numberOfRounds = numPlayers - 1;
   let players = createPlayers(numPlayers);
   const schedule: Schedule = { games: [] };
