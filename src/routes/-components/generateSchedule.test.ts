@@ -51,22 +51,22 @@ describe('createGamesFromPairs', () => {
     it('creates pairs and games with a bye', () => {
       // example:
       // 1  2
-      // B  3
-      // 7  4
-      // 6  5
+      // 7  3
+      // 6  4
+      // 5  B
       //
-      // Game 1: 1&bye vs 2&3
-      // Game 2: 7&6 vs 4&5
+      // Game 1: 1&7 vs 2&3
+      // Game 2: 6&5 vs 4&null
 
       const players = createPlayers(7);
-      expect(players).toEqual([1, 2, 3, 4, 5, 6, 7, null]);
+      // expect(players).toEqual([1, 2, 3, 4, 5, 6, 7]);
 
       const pairs = createCirclePairs(players);
       expect(pairs).toEqual([
         { left: 1, right: 2 },
-        { left: null, right: 3 },
-        { left: 7, right: 4 },
-        { left: 6, right: 5 },
+        { left: 7, right: 3 },
+        { left: 6, right: 4 },
+        { left: 5, right: null },
       ]);
 
       // create games
@@ -74,55 +74,95 @@ describe('createGamesFromPairs', () => {
       expect(games).toEqual([
         {
           court: 1,
-          team1: [1, null],
+          team1: [1, 7],
           team2: [2, 3],
         },
         {
           court: 2,
-          team1: [7, 6],
-          team2: [4, 5],
+          team1: [6, 5],
+          team2: [4, null],
         },
       ]);
     });
   });
 
-  // describe('for 6 players', () => {
-  //   it('creates pairs and games with a bye', () => {
-  //     // example:
-  //     // 1  2
-  //     // 6  3
-  //     // 5  4
-  //     //
-  //     // Game 1: 1&6 vs 2&3
-  //     // Game 2: 5&4 are a bye
+  describe('for 6 players', () => {
+    it('creates pairs and games for 4 of the players at a time', () => {
+      // example:
+      // 1  2
+      // 6  3
+      // 5  4
+      // B  B
+      //
+      // Game 1: 1&6 vs 2&3
+      // Game 2: 5&4 vs null&null
 
-  //     const players = createPlayers(7);
-  //     expect(players).toEqual([1, 2, 3, 4, 5, 6]);
+      const players = createPlayers(6);
+      // expect(players).toEqual([1, 2, 3, 4, 5, 6]);
 
-  //     const pairs = createCirclePairs(players);
-  //     expect(pairs).toEqual([
-  //       { left: 1, right: 2 },
-  //       { left: null, right: 3 },
-  //       { left: 7, right: 4 },
-  //       { left: 6, right: 5 },
-  //     ]);
+      const pairs = createCirclePairs(players);
+      expect(pairs).toEqual([
+        { left: 1, right: 2 },
+        { left: 6, right: 3 },
+        { left: 5, right: 4 },
+        { left: null, right: null },
+      ]);
 
-  //     // create games
-  //     const games = createGamesFromPairs(pairs);
-  //     expect(games).toEqual([
-  //       {
-  //         court: 1,
-  //         team1: [1, null],
-  //         team2: [2, 3],
-  //       },
-  //       {
-  //         court: 2,
-  //         team1: [7, 6],
-  //         team2: [4, 5],
-  //       },
-  //     ]);
-  //   });
-  // });
+      // create games
+      const games = createGamesFromPairs(pairs);
+      expect(games).toEqual([
+        {
+          court: 1,
+          team1: [1, 6],
+          team2: [2, 3],
+        },
+        {
+          court: 2,
+          team1: [5, null],
+          team2: [4, null],
+        },
+      ]);
+    });
+  });
+
+  describe('for 5 players', () => {
+    it('creates pairs and games for 4 of the players at a time', () => {
+      // example:
+      // 1  2
+      // 5  3
+      // 4  B
+      // B  B
+      //
+      // Game 1: 1&5 vs 2&3
+      // Game 2: null&null vs 4&null
+
+      const players = createPlayers(5);
+      // expect(players).toEqual([1, 2, 3, 4, 5, null]);
+
+      const pairs = createCirclePairs(players);
+      expect(pairs).toEqual([
+        { left: 1, right: 2 },
+        { left: 5, right: 3 },
+        { left: null, right: 4 },
+        { left: null, right: null },
+      ]);
+
+      // create games
+      const games = createGamesFromPairs(pairs);
+      expect(games).toEqual([
+        {
+          court: 1,
+          team1: [1, 5],
+          team2: [2, 3],
+        },
+        {
+          court: 2,
+          team1: [null, null],
+          team2: [4, null],
+        },
+      ]);
+    });
+  });
 });
 
 describe('rotatePlayers', () => {
@@ -231,20 +271,20 @@ describe('generateSchedule', () => {
     expect(schedule).toMatchSnapshot();
   });
 
-  // describe('for 5 players', () => {
-  //   it('generates a schedule for 6 players over 5 rounds because one the players gets a bye each round', () => {
-  //     const schedule = generateSchedule(5);
-  //     expect(schedule.games.length).toBe(5);
-  //     expect(schedule).toMatchSnapshot();
-  //   });
-  // });
+  describe('for 5 players', () => {
+    it('generates a schedule for 6 players over 5 rounds because one the players gets a bye each round', () => {
+      const schedule = generateSchedule(5);
+      expect(schedule.games.length).toBe(4);
+      expect(schedule).toMatchSnapshot();
+    });
+  });
 
-  // describe('for 7 players', () => {
-  //   it.only('generates a schedule for 7 players over 6 rounds because one the players gets a bye each round', () => {
-  //     const schedule = generateSchedule(7);
-  //     console.log(JSON.stringify(schedule, null, 2));
-  //     // expect(schedule.games.length).toBe(7);
-  //     // expect(schedule).toMatchSnapshot();
-  //   });
-  // });
+  describe('for 7 players', () => {
+    it('generates a schedule for 7 players over 6 rounds because one the players gets a bye each round', () => {
+      const schedule = generateSchedule(7);
+      console.log(JSON.stringify(schedule, null, 2));
+      expect(schedule.games.length).toBe(6);
+      expect(schedule).toMatchSnapshot();
+    });
+  });
 });

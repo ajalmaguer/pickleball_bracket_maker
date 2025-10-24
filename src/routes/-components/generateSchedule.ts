@@ -1,50 +1,94 @@
-export interface Pairing {
+type PairingPlaceholder = {
+  left: number | null | undefined;
+  right: number | null | undefined;
+};
+
+export type Pairing = {
   left: number | null;
   right: number | null;
-}
-export interface Game {
+};
+
+export type Game = {
   court: number;
   team1: [number | null, number | null];
   team2: [number | null, number | null];
-}
-export interface Schedule {
+};
+
+export type GameWithoutByes = {
+  court: number;
+  team1: [number, number];
+  team2: [number, number];
+};
+
+export type Schedule = {
   games: Game[][];
-}
+};
 
-export function createPlayers(numPlayers: number): (number | null)[] {
+export function createPlayers(numPlayers: number): number[] {
   if (!Number.isInteger(numPlayers) || numPlayers <= 0) return [];
-  const arr: (number | null)[] = Array.from(
-    { length: numPlayers },
-    (_, i) => i + 1
-  );
-  if (numPlayers % 2 !== 0) arr.push(null);
-  return arr;
+  return Array.from({ length: numPlayers }, (_, i) => i + 1);
 }
 
-export function createCirclePairs(players: (number | null)[]) {
+export function createCirclePairs(players: number[], debug = false): Pairing[] {
   const n = players.length;
-  const pairs = [];
+  const pairs: PairingPlaceholder[] = [];
 
-  // For a circle, we pair adjacent positions going around
-  // For an even number, we go: 0-1, (n-1)-2, (n-2)-3, etc.
+  // generate empty pairs but the pairs need to have space for a multiple of four players that's bigger than the number of players
+  const targetSpaces = Math.ceil(n / 4) * 4;
+  const targetEmptyPairs = targetSpaces / 2;
+  const byeCount = targetSpaces - n;
+  const countOfPairsWithByes = Math.ceil(byeCount / 2);
 
-  for (let i = 0; i < n / 2; i++) {
-    if (i === 0) {
-      // First pair: positions 0 and 1
-      pairs.push({
-        left: players[0],
-        right: players[1],
-      });
-    } else {
-      // Remaining pairs: from the end going inward
-      pairs.push({
-        left: players[n - i],
-        right: players[i + 1],
-      });
+  if (debug) {
+    console.log('for n=', n);
+    console.log('targetLength', targetSpaces);
+    console.log('targetEmptyPairs', targetEmptyPairs);
+    console.log('byeCount', byeCount);
+    console.log('countOfPairsWithByes', countOfPairsWithByes);
+  }
+
+  // create the empty pairs
+  while (pairs.length < targetEmptyPairs - countOfPairsWithByes) {
+    pairs.push({ left: undefined, right: undefined });
+  }
+
+  // add the pairs with byes
+  if (byeCount === 1) {
+    pairs.push({ left: undefined, right: null });
+  } else if (byeCount === 2) {
+    pairs.push({ left: null, right: null });
+  } else if (byeCount === 3) {
+    pairs.push({ left: null, right: undefined });
+    pairs.push({ left: null, right: null });
+  }
+
+  // add player 1 to first left
+  pairs[0].left = players[0];
+
+  // fill in the rest of the pairs with players counter clockwise starting from the right going down then back up the left side
+  let playerIdx = 1;
+
+  // fill right side from top to bottom
+  for (let i = 0; i < pairs.length; i++) {
+    if (pairs[i].right === undefined && playerIdx < players.length) {
+      pairs[i].right = players[playerIdx];
+      playerIdx++;
     }
   }
 
-  return pairs;
+  // fill left side from bottom to top
+  for (let i = pairs.length - 1; i >= 0; i--) {
+    if (pairs[i].left === undefined && playerIdx < players.length) {
+      pairs[i].left = players[playerIdx];
+      playerIdx++;
+    }
+  }
+
+  if (debug) {
+    console.table(pairs);
+  }
+
+  return pairs as Pairing[];
 }
 
 export function createGamesFromPairs(pairs: Pairing[]): Game[] {
@@ -65,7 +109,7 @@ export function createGamesFromPairs(pairs: Pairing[]): Game[] {
   return games;
 }
 
-export function rotatePlayers(_players: (number | null)[]): (number | null)[] {
+export function rotatePlayers(_players: number[]): number[] {
   const players = [..._players];
   if (players.length <= 1) {
     return [...players];

@@ -2,18 +2,21 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useAtom } from 'jotai';
 import { Calendar, Users } from 'lucide-react';
 import { playerNamesAtom, scheduleAtom } from '../state';
-import { generateSchedule } from './-components/generateSchedule';
+import {
+  generateSchedule,
+  type Game,
+  type GameWithoutByes,
+} from './-components/generateSchedule';
 import { PlayerNamesInput } from './-components/PlayerInput';
 
 export const Route = createFileRoute('/')({
   component: App,
 });
 
-// function hasNoByes(match: Match | MatchWithoutByes): match is MatchWithoutByes {
-function hasNoByes(something: any) {
-  return true;
-  // const { team1, team2 } = match;
-  // return team1.every((player) => !!player) && team2.every((player) => !!player);
+function hasNoByes(game: Game | GameWithoutByes): game is GameWithoutByes {
+  // function hasNoByes(something: any) {
+  const { team1, team2 } = game;
+  return team1.every((player) => !!player) && team2.every((player) => !!player);
 }
 
 const PickleballScheduler = () => {
