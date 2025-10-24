@@ -288,3 +288,71 @@ Files prefixed with `demo` can be safely deleted. They are there to provide a st
 # Learn More
 
 You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
+
+
+## Berger table rotation example
+
+```
+ROUND 1
+1  2
+8  3
+7  4
+6  5
+
+Game 1: 1&8 vs 2&3
+Game 2: 7&6 vs 4&5
+
+ROUND 2
+1  3
+2  4
+8  5
+7  6
+
+Game 1: 1&2 vs 3&4
+Game 2: 8&7 vs 5&6
+
+ROUND 3
+1  4
+3  5
+2  6
+8  7
+
+Game 1: 1&3 vs 4&5
+Game 2: 2&8 vs 6&7
+
+ROUND 4
+1  5
+4  6
+3  7
+2  8
+
+Game 1: 1&4 vs 5&6
+Game 2: 3&2 vs 7&8
+
+ROUND 5
+1  6
+5  7
+4  8
+3  2
+
+Game 1: 1&5 vs 6&7
+Game 2: 4&3 vs 8&2
+
+ROUND 6
+1  7
+6  8
+5  2
+4  3
+
+Game 1: 1&6 vs 7&8
+Game 2: 5&4 vs 2&3
+
+ROUND 7
+1  8
+7  2
+6  3
+5  4
+
+Game 1: 1&7 vs 8&2
+Game 2: 6&5 vs 3&4
+```

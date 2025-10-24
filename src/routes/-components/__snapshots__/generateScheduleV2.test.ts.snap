@@ -1,0 +1,222 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`generateSchedule > generates a full schedule for 8 players over 7 rounds 1`] = `
+{
+  "games": [
+    [
+      {
+        "court": 1,
+        "team1": [
+          1,
+          8,
+        ],
+        "team2": [
+          2,
+          3,
+        ],
+      },
+      {
+        "court": 2,
+        "team1": [
+          7,
+          6,
+        ],
+        "team2": [
+          4,
+          5,
+        ],
+      },
+    ],
+    [
+      {
+        "court": 1,
+        "team1": [
+          1,
+          2,
+        ],
+        "team2": [
+          3,
+          4,
+        ],
+      },
+      {
+        "court": 2,
+        "team1": [
+          8,
+          7,
+        ],
+        "team2": [
+          5,
+          6,
+        ],
+      },
+    ],
+    [
+      {
+        "court": 1,
+        "team1": [
+          1,
+          3,
+        ],
+        "team2": [
+          4,
+          5,
+        ],
+      },
+      {
+        "court": 2,
+        "team1": [
+          2,
+          8,
+        ],
+        "team2": [
+          6,
+          7,
+        ],
+      },
+    ],
+    [
+      {
+        "court": 1,
+        "team1": [
+          1,
+          4,
+        ],
+        "team2": [
+          5,
+          6,
+        ],
+      },
+      {
+        "court": 2,
+        "team1": [
+          3,
+          2,
+        ],
+        "team2": [
+          7,
+          8,
+        ],
+      },
+    ],
+    [
+      {
+        "court": 1,
+        "team1": [
+          1,
+          5,
+        ],
+        "team2": [
+          6,
+          7,
+        ],
+      },
+      {
+        "court": 2,
+        "team1": [
+          4,
+          3,
+        ],
+        "team2": [
+          8,
+          2,
+        ],
+      },
+    ],
+    [
+      {
+        "court": 1,
+        "team1": [
+          1,
+          6,
+        ],
+        "team2": [
+          7,
+          8,
+        ],
+      },
+      {
+        "court": 2,
+        "team1": [
+          5,
+          4,
+        ],
+        "team2": [
+          2,
+          3,
+        ],
+      },
+    ],
+    [
+      {
+        "court": 1,
+        "team1": [
+          1,
+          7,
+        ],
+        "team2": [
+          8,
+          2,
+        ],
+      },
+      {
+        "court": 2,
+        "team1": [
+          6,
+          5,
+        ],
+        "team2": [
+          3,
+          4,
+        ],
+      },
+    ],
+  ],
+}
+`;
+
+exports[`generateSchedule > generates a schedule for 4 players over 3 rounds 1`] = `
+{
+  "games": [
+    [
+      {
+        "court": 1,
+        "team1": [
+          1,
+          4,
+        ],
+        "team2": [
+          2,
+          3,
+        ],
+      },
+    ],
+    [
+      {
+        "court": 1,
+        "team1": [
+          1,
+          2,
+        ],
+        "team2": [
+          3,
+          4,
+        ],
+      },
+    ],
+    [
+      {
+        "court": 1,
+        "team1": [
+          1,
+          3,
+        ],
+        "team2": [
+          4,
+          2,
+        ],
+      },
+    ],
+  ],
+}
+`;
