@@ -1,9 +1,7 @@
-import type { PlayerId, RoundRobin } from '@/types';
+import type { RoundRobin } from '@/types';
 import { createFileRoute } from '@tanstack/react-router';
-import { useAtom } from 'jotai/react';
 import { atomWithStorage } from 'jotai/utils';
-import { type ReactNode } from 'react';
-import { Table } from './-components/table';
+import { TwoCourtRoundRobinPage } from './-components/TwoCourtRoundRobinPage';
 
 const namesStorage = atomWithStorage('5-8-players-mixed--names', [
   '',
@@ -95,83 +93,14 @@ export const Route = createFileRoute('/5-8-players-mixed')({
   component: FiveToEightPlayersMixed,
 });
 
-function formatNames(
-  [playerAId, playerBId]: [PlayerId, PlayerId],
-  playerNames: string[],
-): ReactNode {
-  const playerAName = playerNames[playerAId - 1] || playerAId;
-  const playerBName = playerNames[playerBId - 1] || playerBId;
-  return `${playerAName} & ${playerBName}`;
-}
-
 function FiveToEightPlayersMixed() {
-  const [playerNames, setPlayerNames] = useAtom(namesStorage);
-  const [courts, setCourts] = useAtom(courtStorage);
-
-  const tableRows = mixedDoubles.map((round, b) => {
-    const [matchA, matchB] = round;
-    return [
-      formatNames(matchA.serve, playerNames),
-      formatNames(matchA.receive, playerNames),
-      formatNames(matchB.serve, playerNames),
-      formatNames(matchB.receive, playerNames),
-    ] as [ReactNode, ReactNode, ReactNode, ReactNode];
-  });
-
-  function handleCourtChange(index: number, value: string) {
-    setCourts((current) => {
-      const newArray = [...current];
-      newArray[index] = value;
-      return newArray;
-    });
-  }
-
-  function handleNameChange(index: number, value: string) {
-    setPlayerNames((current) => {
-      const newArray = [...current];
-      newArray[index] = value;
-      return newArray;
-    });
-  }
-
   return (
-    <div className="page">
-      <button className="print-btn" onClick={() => window.print()}>
-        Print / Save as PDF
-      </button>
-
-      <div className="header">
-        <div className="title">Mixed Doubles Round Robin — 5–8 Players</div>
-        <div className="subtitle">2 courts · {tableRows.length} rounds</div>
-      </div>
-
-      <Table
-        rows={tableRows}
-        courts={courts}
-        handleCourtChange={handleCourtChange}
-      />
-
-      <div className="players">
-        <div className="players-label">Players</div>
-        <div className="players-grid mixed-doubles">
-          {playerNames.map((name, index) => {
-            return (
-              <div className="player-chip" key={index}>
-                <div className="player-num">{index + 1}</div>
-                <input
-                  id={`player-${index}-input`}
-                  type="text"
-                  onChange={(event) =>
-                    handleNameChange(index, event.target.value)
-                  }
-                  value={name}
-                  placeholder={`Player ${index + 1}`}
-                />
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
+    <TwoCourtRoundRobinPage
+      title="Mixed Doubles Round Robin: 5 - 8 Players"
+      namesStorage={namesStorage}
+      courtStorage={courtStorage}
+      roundRobin={mixedDoubles}
+      mixedDoubles
+    />
   );
 }

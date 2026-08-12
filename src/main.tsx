@@ -4,6 +4,7 @@ import { RouterProvider, createRouter } from '@tanstack/react-router';
 
 // Import the generated route tree
 import { routeTree } from './routeTree.gen';
+import { registerSW } from 'virtual:pwa-register';
 
 import './styles.css';
 import reportWebVitals from './reportWebVitals.ts';
@@ -43,16 +44,7 @@ if (rootElement && !rootElement.innerHTML) {
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
 
-// Register service worker for PWA
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker
-      .register('/sw.js')
-      .then((registration) => {
-        console.log('Service Worker registered with scope:', registration.scope);
-      })
-      .catch((error) => {
-        console.log('Service Worker registration failed:', error);
-      });
-  });
-}
+// Let vite-plugin-pwa select the correct worker URL for dev and production.
+// Registering `/sw.js` directly in dev hits Vite's SPA fallback and returns
+// index.html, which the browser rejects as an invalid service worker script.
+registerSW({ immediate: true });
