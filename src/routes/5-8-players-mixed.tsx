@@ -87,7 +87,7 @@ const mixedDoubles: RoundRobin = [
 ];
 
 export const Route = createFileRoute('/5-8-players-mixed')({
-  component: FiveToEightPlayers,
+  component: FiveToEightPlayersMixed,
 });
 
 function formatNames(
@@ -99,7 +99,7 @@ function formatNames(
   return `${playerAName} & ${playerBName}`;
 }
 
-function FiveToEightPlayers() {
+function FiveToEightPlayersMixed() {
   const [playerNames, setPlayerNames] = useAtom(storage);
 
   const tableRows = mixedDoubles.map((round, b) => {
@@ -137,7 +137,7 @@ function FiveToEightPlayers() {
 
       <div className="header">
         <div className="title">Mixed Doubles Round Robin — 5–8 Players</div>
-        <div className="subtitle">2 courts · 7 rounds</div>
+        <div className="subtitle">2 courts · 12 rounds</div>
       </div>
 
       <Table
