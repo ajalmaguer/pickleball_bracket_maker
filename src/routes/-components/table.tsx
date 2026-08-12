@@ -1,4 +1,4 @@
-import { Fragment, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
 type TableProps = {
   rows: [ReactNode, ReactNode, ReactNode, ReactNode][];
