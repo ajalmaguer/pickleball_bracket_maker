@@ -1,7 +1,7 @@
 import type { RoundRobin } from '@/types';
 import { createFileRoute } from '@tanstack/react-router';
 import { atomWithStorage } from 'jotai/utils';
-import { TwoCourtRoundRobinPage } from './-components/TwoCourtRoundRobinPage';
+import { RoundRobinPage } from './-components/RoundRobinPage';
 
 const namesStorage = atomWithStorage('5-8-players-mixed--names', [
   '',
@@ -19,7 +19,7 @@ const courtStorage = atomWithStorage('5-8-players-mixed--courts', [
   'Court B',
 ]);
 
-const mixedDoubles: RoundRobin = [
+const roundRobin: RoundRobin = [
   // 1 > 1, 5,
   // 2 > 2, 6,
   // 3 > 3, 7,
@@ -113,11 +113,11 @@ export const Route = createFileRoute('/5-8-players-mixed')({
 
 function FiveToEightPlayersMixed() {
   return (
-    <TwoCourtRoundRobinPage
+    <RoundRobinPage
       title="Mixed Doubles Round Robin: 5 - 8 Players"
       namesStorage={namesStorage}
       courtStorage={courtStorage}
-      roundRobin={mixedDoubles}
+      roundRobin={roundRobin}
       mixedDoubles
     />
   );

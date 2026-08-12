@@ -1,9 +1,9 @@
 import type { PlayerId, RoundRobin } from '@/types';
+import { Link } from '@tanstack/react-router';
 import type { SetStateAction, WritableAtom } from 'jotai';
 import { useAtom } from 'jotai/react';
 import type { ReactNode } from 'react';
-import { Table } from './TwoCourtTable';
-import { Link } from '@tanstack/react-router';
+import { NCourtTable } from './NCourtTable';
 
 function formatNames(
   [playerAId, playerBId]: [PlayerId, PlayerId],
@@ -22,7 +22,7 @@ type RoundRobinPageProps = {
   mixedDoubles?: boolean;
 };
 
-export function TwoCourtRoundRobinPage({
+export function RoundRobinPage({
   title,
   namesStorage,
   courtStorage,
@@ -33,13 +33,16 @@ export function TwoCourtRoundRobinPage({
   const [courts, setCourts] = useAtom(courtStorage);
 
   const tableRows = roundRobin.map((round) => {
-    const [matchA, matchB] = round;
-    return [
-      formatNames(matchA.serve, playerNames),
-      formatNames(matchA.receive, playerNames),
-      formatNames(matchB?.serve || '', playerNames),
-      formatNames(matchB?.receive || '', playerNames),
-    ] as [ReactNode, ReactNode, ReactNode, ReactNode];
+    const matchups: [ReactNode, ReactNode][] = [];
+    round.forEach(({ serve, receive }) => {
+      matchups.push([
+        formatNames(serve, playerNames),
+        formatNames(receive, playerNames),
+      ]);
+    });
+    return {
+      matchups,
+    };
   });
 
   function handleCourtChange(index: number, value: string) {
@@ -72,6 +75,9 @@ export function TwoCourtRoundRobinPage({
             <li>
               <Link to="/5-8-players-mixed">5 - 8 players mixed</Link>
             </li>
+            <li>
+              <Link to="/9-12-players">9 - 12 players</Link>
+            </li>
           </ul>
         </div>
       </div>
@@ -83,7 +89,7 @@ export function TwoCourtRoundRobinPage({
         </div>
       </div>
 
-      <Table
+      <NCourtTable
         rows={tableRows}
         courts={courts}
         handleCourtChange={handleCourtChange}
