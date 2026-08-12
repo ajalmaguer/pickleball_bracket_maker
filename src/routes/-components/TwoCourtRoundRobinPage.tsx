@@ -32,7 +32,7 @@ export function TwoCourtRoundRobinPage({
   const [playerNames, setPlayerNames] = useAtom(namesStorage);
   const [courts, setCourts] = useAtom(courtStorage);
 
-  const tableRows = roundRobin.map((round, b) => {
+  const tableRows = roundRobin.map((round) => {
     const [matchA, matchB] = round;
     return [
       formatNames(matchA.serve, playerNames),
