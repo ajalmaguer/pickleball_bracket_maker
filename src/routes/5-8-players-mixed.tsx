@@ -118,7 +118,7 @@ function FiveToEightPlayersMixed() {
       namesStorage={namesStorage}
       courtStorage={courtStorage}
       roundRobin={roundRobin}
-      mixedDoubles
+      playerGridClass="mixed-doubles-8"
     />
   );
 }

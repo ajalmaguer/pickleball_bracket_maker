@@ -295,10 +295,24 @@ body {
   flex-shrink: 0;
 }
 
-.mixed-doubles .player-chip:nth-child(1) .player-num,
-.mixed-doubles .player-chip:nth-child(2) .player-num,
-.mixed-doubles .player-chip:nth-child(3) .player-num,
-.mixed-doubles .player-chip:nth-child(4) .player-num {
+.mixed-doubles-8 .player-chip:nth-child(1) .player-num,
+.mixed-doubles-8 .player-chip:nth-child(2) .player-num,
+.mixed-doubles-8 .player-chip:nth-child(3) .player-num,
+.mixed-doubles-8 .player-chip:nth-child(4) .player-num {
+  background: white;
+  color: black;
+  border: 1px solid black;
+}
+
+.mixed-doubles-12 {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.mixed-doubles-12 .player-chip:nth-child(1) .player-num,
+.mixed-doubles-12 .player-chip:nth-child(2) .player-num,
+.mixed-doubles-12 .player-chip:nth-child(3) .player-num,
+.mixed-doubles-12 .player-chip:nth-child(4) .player-num,
+.mixed-doubles-12 .player-chip:nth-child(5) .player-num,
+.mixed-doubles-12 .player-chip:nth-child(6) .player-num {
   background: white;
   color: black;
   border: 1px solid black;
@@ -335,6 +349,7 @@ body {
 
 .navbar-links {
   display: flex;
+  flex-direction: column;
   gap: 16px;
 }
 
@@ -352,7 +367,6 @@ body {
   }
 
   .navbar-links {
-    flex-direction: column;
     align-items: flex-end;
   }
 }

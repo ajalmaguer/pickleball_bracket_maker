@@ -19,7 +19,7 @@ type RoundRobinPageProps = {
   namesStorage: WritableAtom<string[], [SetStateAction<string[]>], void>;
   courtStorage: WritableAtom<string[], [SetStateAction<string[]>], void>;
   roundRobin: RoundRobin;
-  mixedDoubles?: boolean;
+  playerGridClass?: string;
 };
 
 export function RoundRobinPage({
@@ -27,7 +27,7 @@ export function RoundRobinPage({
   namesStorage,
   courtStorage,
   roundRobin,
-  mixedDoubles,
+  playerGridClass,
 }: RoundRobinPageProps) {
   const [playerNames, setPlayerNames] = useAtom(namesStorage);
   const [courts, setCourts] = useAtom(courtStorage);
@@ -78,6 +78,9 @@ export function RoundRobinPage({
             <li>
               <Link to="/9-12-players">9 - 12 players</Link>
             </li>
+            <li>
+              <Link to="/9-12-players-mixed">9 - 12 players mixed</Link>
+            </li>
           </ul>
         </div>
       </div>
@@ -97,11 +100,7 @@ export function RoundRobinPage({
 
       <div className="players">
         <div className="players-label">Players</div>
-        <div
-          className={['players-grid', mixedDoubles ? 'mixed-doubles' : ''].join(
-            ' ',
-          )}
-        >
+        <div className={['players-grid', playerGridClass ?? ''].join(' ')}>
           {playerNames.map((name, index) => {
             return (
               <div className="player-chip" key={index}>
