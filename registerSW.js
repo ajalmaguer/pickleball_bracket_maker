@@ -1,1 +1,0 @@
-if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/pickleball_bracket_maker/sw.js', { scope: '/pickleball_bracket_maker/' })})}
