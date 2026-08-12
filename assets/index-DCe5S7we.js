@@ -1,1 +1,0 @@
-import{j as e,L as r}from"./index-gVEoWw78.js";function i(){return e.jsx("div",{children:e.jsxs("ul",{children:[e.jsx("li",{children:e.jsx(r,{to:"/5-8-players",children:"5 - 8 players"})}),e.jsx("li",{children:e.jsx(r,{to:"/5-8-players-mixed",children:"5 - 8 players mixed"})})]})})}export{i as component};
