@@ -345,3 +345,14 @@ body {
   font-size: 13px;
   background-color: #f0f0f0;
 }
+
+@media (max-width: 540px) {
+  .navbar-container {
+    margin-bottom: 20px;
+  }
+
+  .navbar-links {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+}
