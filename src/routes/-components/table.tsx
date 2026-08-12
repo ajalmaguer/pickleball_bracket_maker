@@ -38,7 +38,7 @@ export function Table({ rows, courts, handleCourtChange }: TableProps) {
           <tbody>
             {rows.map(([teamA, teamB, teamC, teamD], index) => {
               return (
-                <tr>
+                <tr key={index}>
                   <td>{index + 1}</td>
                   <td>
                     <div className="matchup">

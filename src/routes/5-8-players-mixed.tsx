@@ -5,7 +5,7 @@ import { atomWithStorage } from 'jotai/utils';
 import { type ReactNode } from 'react';
 import { Table } from './-components/table';
 
-const storage = atomWithStorage('5-8-players-mixed', [
+const namesStorage = atomWithStorage('5-8-players-mixed--names', [
   '',
   '',
   '',
@@ -14,6 +14,11 @@ const storage = atomWithStorage('5-8-players-mixed', [
   '',
   '',
   '',
+]);
+
+const courtStorage = atomWithStorage('5-8-players-mixed--courts', [
+  'Court A',
+  'Court B',
 ]);
 
 const mixedDoubles: RoundRobin = [
@@ -100,10 +105,10 @@ function formatNames(
 }
 
 function FiveToEightPlayersMixed() {
-  const [playerNames, setPlayerNames] = useAtom(storage);
+  const [playerNames, setPlayerNames] = useAtom(namesStorage);
+  const [courts, setCourts] = useAtom(courtStorage);
 
   const tableRows = mixedDoubles.map((round, b) => {
-    console.log({ round, b });
     const [matchA, matchB] = round;
     return [
       formatNames(matchA.serve, playerNames),
@@ -114,17 +119,17 @@ function FiveToEightPlayersMixed() {
   });
 
   function handleCourtChange(index: number, value: string) {
-    console.log({ index, value });
+    setCourts((current) => {
+      const newArray = [...current];
+      newArray[index] = value;
+      return newArray;
+    });
   }
 
-  function handleChange(
-    event: React.ChangeEvent<HTMLInputElement>,
-    index: number,
-  ) {
-    console.log({ event, index, value: event.currentTarget.value });
+  function handleNameChange(index: number, value: string) {
     setPlayerNames((current) => {
       const newArray = [...current];
-      newArray[index] = event.target.value;
+      newArray[index] = value;
       return newArray;
     });
   }
@@ -137,12 +142,12 @@ function FiveToEightPlayersMixed() {
 
       <div className="header">
         <div className="title">Mixed Doubles Round Robin — 5–8 Players</div>
-        <div className="subtitle">2 courts · 12 rounds</div>
+        <div className="subtitle">2 courts · {tableRows.length} rounds</div>
       </div>
 
       <Table
         rows={tableRows}
-        courts={['Court A', 'Court B']}
+        courts={courts}
         handleCourtChange={handleCourtChange}
       />
 
@@ -156,7 +161,9 @@ function FiveToEightPlayersMixed() {
                 <input
                   id={`player-${index}-input`}
                   type="text"
-                  onChange={(event) => handleChange(event, index)}
+                  onChange={(event) =>
+                    handleNameChange(index, event.target.value)
+                  }
                   value={name}
                   placeholder={`Player ${index + 1}`}
                 />
