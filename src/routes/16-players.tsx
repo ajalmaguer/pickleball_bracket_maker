@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/12-16-players')({
+export const Route = createFileRoute('/16-players')({
   component: TwelveToSixteenPlayers,
 });
 

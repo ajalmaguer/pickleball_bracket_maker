@@ -9,36 +9,36 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as R912PlayersMixedRouteImport } from './routes/9-12-players-mixed'
-import { Route as R912PlayersRouteImport } from './routes/9-12-players'
-import { Route as R58PlayersMixedRouteImport } from './routes/5-8-players-mixed'
-import { Route as R58PlayersRouteImport } from './routes/5-8-players'
-import { Route as R1216PlayersRouteImport } from './routes/12-16-players'
+import { Route as R8PlayersMixedRouteImport } from './routes/8-players-mixed'
+import { Route as R8PlayersRouteImport } from './routes/8-players'
+import { Route as R16PlayersRouteImport } from './routes/16-players'
+import { Route as R12PlayersMixedRouteImport } from './routes/12-players-mixed'
+import { Route as R12PlayersRouteImport } from './routes/12-players'
 import { Route as IndexRouteImport } from './routes/index'
 
-const R912PlayersMixedRoute = R912PlayersMixedRouteImport.update({
-  id: '/9-12-players-mixed',
-  path: '/9-12-players-mixed',
+const R8PlayersMixedRoute = R8PlayersMixedRouteImport.update({
+  id: '/8-players-mixed',
+  path: '/8-players-mixed',
   getParentRoute: () => rootRouteImport,
 } as any)
-const R912PlayersRoute = R912PlayersRouteImport.update({
-  id: '/9-12-players',
-  path: '/9-12-players',
+const R8PlayersRoute = R8PlayersRouteImport.update({
+  id: '/8-players',
+  path: '/8-players',
   getParentRoute: () => rootRouteImport,
 } as any)
-const R58PlayersMixedRoute = R58PlayersMixedRouteImport.update({
-  id: '/5-8-players-mixed',
-  path: '/5-8-players-mixed',
+const R16PlayersRoute = R16PlayersRouteImport.update({
+  id: '/16-players',
+  path: '/16-players',
   getParentRoute: () => rootRouteImport,
 } as any)
-const R58PlayersRoute = R58PlayersRouteImport.update({
-  id: '/5-8-players',
-  path: '/5-8-players',
+const R12PlayersMixedRoute = R12PlayersMixedRouteImport.update({
+  id: '/12-players-mixed',
+  path: '/12-players-mixed',
   getParentRoute: () => rootRouteImport,
 } as any)
-const R1216PlayersRoute = R1216PlayersRouteImport.update({
-  id: '/12-16-players',
-  path: '/12-16-players',
+const R12PlayersRoute = R12PlayersRouteImport.update({
+  id: '/12-players',
+  path: '/12-players',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -49,100 +49,100 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/12-16-players': typeof R1216PlayersRoute
-  '/5-8-players': typeof R58PlayersRoute
-  '/5-8-players-mixed': typeof R58PlayersMixedRoute
-  '/9-12-players': typeof R912PlayersRoute
-  '/9-12-players-mixed': typeof R912PlayersMixedRoute
+  '/12-players': typeof R12PlayersRoute
+  '/12-players-mixed': typeof R12PlayersMixedRoute
+  '/16-players': typeof R16PlayersRoute
+  '/8-players': typeof R8PlayersRoute
+  '/8-players-mixed': typeof R8PlayersMixedRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/12-16-players': typeof R1216PlayersRoute
-  '/5-8-players': typeof R58PlayersRoute
-  '/5-8-players-mixed': typeof R58PlayersMixedRoute
-  '/9-12-players': typeof R912PlayersRoute
-  '/9-12-players-mixed': typeof R912PlayersMixedRoute
+  '/12-players': typeof R12PlayersRoute
+  '/12-players-mixed': typeof R12PlayersMixedRoute
+  '/16-players': typeof R16PlayersRoute
+  '/8-players': typeof R8PlayersRoute
+  '/8-players-mixed': typeof R8PlayersMixedRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/12-16-players': typeof R1216PlayersRoute
-  '/5-8-players': typeof R58PlayersRoute
-  '/5-8-players-mixed': typeof R58PlayersMixedRoute
-  '/9-12-players': typeof R912PlayersRoute
-  '/9-12-players-mixed': typeof R912PlayersMixedRoute
+  '/12-players': typeof R12PlayersRoute
+  '/12-players-mixed': typeof R12PlayersMixedRoute
+  '/16-players': typeof R16PlayersRoute
+  '/8-players': typeof R8PlayersRoute
+  '/8-players-mixed': typeof R8PlayersMixedRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/12-16-players'
-    | '/5-8-players'
-    | '/5-8-players-mixed'
-    | '/9-12-players'
-    | '/9-12-players-mixed'
+    | '/12-players'
+    | '/12-players-mixed'
+    | '/16-players'
+    | '/8-players'
+    | '/8-players-mixed'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/12-16-players'
-    | '/5-8-players'
-    | '/5-8-players-mixed'
-    | '/9-12-players'
-    | '/9-12-players-mixed'
+    | '/12-players'
+    | '/12-players-mixed'
+    | '/16-players'
+    | '/8-players'
+    | '/8-players-mixed'
   id:
     | '__root__'
     | '/'
-    | '/12-16-players'
-    | '/5-8-players'
-    | '/5-8-players-mixed'
-    | '/9-12-players'
-    | '/9-12-players-mixed'
+    | '/12-players'
+    | '/12-players-mixed'
+    | '/16-players'
+    | '/8-players'
+    | '/8-players-mixed'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  R1216PlayersRoute: typeof R1216PlayersRoute
-  R58PlayersRoute: typeof R58PlayersRoute
-  R58PlayersMixedRoute: typeof R58PlayersMixedRoute
-  R912PlayersRoute: typeof R912PlayersRoute
-  R912PlayersMixedRoute: typeof R912PlayersMixedRoute
+  R12PlayersRoute: typeof R12PlayersRoute
+  R12PlayersMixedRoute: typeof R12PlayersMixedRoute
+  R16PlayersRoute: typeof R16PlayersRoute
+  R8PlayersRoute: typeof R8PlayersRoute
+  R8PlayersMixedRoute: typeof R8PlayersMixedRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/9-12-players-mixed': {
-      id: '/9-12-players-mixed'
-      path: '/9-12-players-mixed'
-      fullPath: '/9-12-players-mixed'
-      preLoaderRoute: typeof R912PlayersMixedRouteImport
+    '/8-players-mixed': {
+      id: '/8-players-mixed'
+      path: '/8-players-mixed'
+      fullPath: '/8-players-mixed'
+      preLoaderRoute: typeof R8PlayersMixedRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/9-12-players': {
-      id: '/9-12-players'
-      path: '/9-12-players'
-      fullPath: '/9-12-players'
-      preLoaderRoute: typeof R912PlayersRouteImport
+    '/8-players': {
+      id: '/8-players'
+      path: '/8-players'
+      fullPath: '/8-players'
+      preLoaderRoute: typeof R8PlayersRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/5-8-players-mixed': {
-      id: '/5-8-players-mixed'
-      path: '/5-8-players-mixed'
-      fullPath: '/5-8-players-mixed'
-      preLoaderRoute: typeof R58PlayersMixedRouteImport
+    '/16-players': {
+      id: '/16-players'
+      path: '/16-players'
+      fullPath: '/16-players'
+      preLoaderRoute: typeof R16PlayersRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/5-8-players': {
-      id: '/5-8-players'
-      path: '/5-8-players'
-      fullPath: '/5-8-players'
-      preLoaderRoute: typeof R58PlayersRouteImport
+    '/12-players-mixed': {
+      id: '/12-players-mixed'
+      path: '/12-players-mixed'
+      fullPath: '/12-players-mixed'
+      preLoaderRoute: typeof R12PlayersMixedRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/12-16-players': {
-      id: '/12-16-players'
-      path: '/12-16-players'
-      fullPath: '/12-16-players'
-      preLoaderRoute: typeof R1216PlayersRouteImport
+    '/12-players': {
+      id: '/12-players'
+      path: '/12-players'
+      fullPath: '/12-players'
+      preLoaderRoute: typeof R12PlayersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -157,11 +157,11 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  R1216PlayersRoute: R1216PlayersRoute,
-  R58PlayersRoute: R58PlayersRoute,
-  R58PlayersMixedRoute: R58PlayersMixedRoute,
-  R912PlayersRoute: R912PlayersRoute,
-  R912PlayersMixedRoute: R912PlayersMixedRoute,
+  R12PlayersRoute: R12PlayersRoute,
+  R12PlayersMixedRoute: R12PlayersMixedRoute,
+  R16PlayersRoute: R16PlayersRoute,
+  R8PlayersRoute: R8PlayersRoute,
+  R8PlayersMixedRoute: R8PlayersMixedRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

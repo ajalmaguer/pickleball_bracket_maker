@@ -3,7 +3,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { atomWithStorage } from 'jotai/utils';
 import { RoundRobinPage } from './-components/RoundRobinPage';
 
-const namesStorage = atomWithStorage('9-12-players--names', [
+const namesStorage = atomWithStorage('12-players--names', [
   '',
   '',
   '',
@@ -18,7 +18,7 @@ const namesStorage = atomWithStorage('9-12-players--names', [
   '',
 ]);
 
-const courtStorage = atomWithStorage('9-12-players--courts', [
+const courtStorage = atomWithStorage('12-players--courts', [
   'Court A',
   'Court B',
   'Court C',
@@ -82,14 +82,14 @@ const roundRobin: RoundRobin = [
   ],
 ];
 
-export const Route = createFileRoute('/9-12-players')({
+export const Route = createFileRoute('/12-players')({
   component: NineToTwelvePlayers,
 });
 
 function NineToTwelvePlayers() {
   return (
     <RoundRobinPage
-      title="Round Robin: 9 - 12 Players"
+      title="Round Robin: 12 Players"
       namesStorage={namesStorage}
       courtStorage={courtStorage}
       roundRobin={roundRobin}

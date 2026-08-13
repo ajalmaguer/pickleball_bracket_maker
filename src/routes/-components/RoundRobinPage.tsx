@@ -70,16 +70,16 @@ export function RoundRobinPage({
         <div>
           <ul className="navbar-links">
             <li>
-              <Link to="/5-8-players">5 - 8 players</Link>
+              <Link to="/8-players">8 players</Link>
             </li>
             <li>
-              <Link to="/5-8-players-mixed">5 - 8 players mixed</Link>
+              <Link to="/8-players-mixed">8 players mixed</Link>
             </li>
             <li>
-              <Link to="/9-12-players">9 - 12 players</Link>
+              <Link to="/12-players">12 players</Link>
             </li>
             <li>
-              <Link to="/9-12-players-mixed">9 - 12 players mixed</Link>
+              <Link to="/12-players-mixed">12 players mixed</Link>
             </li>
           </ul>
         </div>
