@@ -51,11 +51,6 @@ const roundRobin: RoundRobin = [
     { serve: [3, 10], receive: [4, 7] },
   ],
   [
-    { serve: [4, 10], receive: [1, 9] },
-    { serve: [2, 7], receive: [5, 12] },
-    { serve: [3, 11], receive: [6, 8] },
-  ],
-  [
     { serve: [5, 9], receive: [4, 12] },
     { serve: [2, 10], receive: [1, 11] },
     { serve: [3, 8], receive: [6, 7] },
@@ -64,6 +59,11 @@ const roundRobin: RoundRobin = [
     { serve: [5, 10], receive: [2, 11] },
     { serve: [1, 12], receive: [6, 8] },
     { serve: [3, 7], receive: [4, 9] },
+  ],
+  [
+    { serve: [4, 10], receive: [1, 9] },
+    { serve: [2, 7], receive: [5, 12] },
+    { serve: [3, 11], receive: [6, 8] },
   ],
 ];
 
