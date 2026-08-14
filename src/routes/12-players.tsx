@@ -90,6 +90,14 @@ function NineToTwelvePlayers() {
   return (
     <RoundRobinPage
       title="Round Robin: 12 Players"
+      description={
+        <>
+          <p>
+            Every player partners with every other player once and faces each
+            other player twice.
+          </p>
+        </>
+      }
       namesStorage={namesStorage}
       courtStorage={courtStorage}
       roundRobin={roundRobin}

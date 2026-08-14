@@ -16,6 +16,7 @@ function formatNames(
 
 type RoundRobinPageProps = {
   title: string;
+  description?: ReactNode;
   namesStorage: WritableAtom<string[], [SetStateAction<string[]>], void>;
   courtStorage: WritableAtom<string[], [SetStateAction<string[]>], void>;
   roundRobin: RoundRobin;
@@ -24,6 +25,7 @@ type RoundRobinPageProps = {
 
 export function RoundRobinPage({
   title,
+  description,
   namesStorage,
   courtStorage,
   roundRobin,
@@ -86,10 +88,13 @@ export function RoundRobinPage({
       </div>
 
       <div className="header">
-        <div className="title">{title}</div>
+        <div>
+          <div className="title">{title}</div>
+        </div>
         <div className="subtitle">
           {courts.length} courts · {tableRows.length} rounds
         </div>
+        {description && <div className="description">{description}</div>}
       </div>
 
       <NCourtTable
