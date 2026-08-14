@@ -64,28 +64,10 @@ export function RoundRobinPage({
   }
 
   return (
-    <div className="page">
-      <div className="navbar-container">
-        <button className="print-btn" onClick={() => window.print()}>
-          Print / Save as PDF
-        </button>
-        <div>
-          <ul className="navbar-links">
-            <li>
-              <Link to="/8-players">8 players</Link>
-            </li>
-            <li>
-              <Link to="/8-players-mixed">8 players mixed</Link>
-            </li>
-            <li>
-              <Link to="/12-players">12 players</Link>
-            </li>
-            <li>
-              <Link to="/12-players-mixed">12 players mixed</Link>
-            </li>
-          </ul>
-        </div>
-      </div>
+    <div>
+      <button className="print-btn" onClick={() => window.print()}>
+        Print / Save as PDF
+      </button>
 
       <div className="header">
         <div>
