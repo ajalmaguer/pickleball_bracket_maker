@@ -1,5 +1,4 @@
 import type { PlayerId, RoundRobin } from '@/types';
-import { Link } from '@tanstack/react-router';
 import type { SetStateAction, WritableAtom } from 'jotai';
 import { useAtom } from 'jotai/react';
 import type { ReactNode } from 'react';

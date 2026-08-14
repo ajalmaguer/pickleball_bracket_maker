@@ -343,9 +343,6 @@ body {
   .card-view {
     display: block;
   }
-  .print-btn {
-    /* display: none; */
-  }
   .players-grid {
     grid-template-columns: repeat(2, 1fr);
   }
