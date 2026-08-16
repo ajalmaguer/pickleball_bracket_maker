@@ -2,6 +2,7 @@ import type { RoundRobin } from '@/types';
 import { createFileRoute } from '@tanstack/react-router';
 import { atomWithStorage } from 'jotai/utils';
 import { RoundRobinPage } from './-components/RoundRobinPage';
+import { analyzeMatchups } from '@/utils/analyzeMatchups';
 
 const namesStorage = atomWithStorage('8-players-mixed--names', [
   '',
@@ -106,12 +107,15 @@ const roundRobin: RoundRobin = [
     { serve: [2, 5], receive: [1, 8] },
   ],
 ];
+const matchupResults = analyzeMatchups(roundRobin);
 
 export const Route = createFileRoute('/8-players-mixed')({
   component: FiveToEightPlayersMixed,
 });
 
 function FiveToEightPlayersMixed() {
+  console.log('matchupResults =', matchupResults);
+
   return (
     <RoundRobinPage
       title="Mixed Doubles Round Robin: 8 Players"
@@ -119,6 +123,19 @@ function FiveToEightPlayersMixed() {
       courtStorage={courtStorage}
       roundRobin={roundRobin}
       playerGridClass="mixed-doubles-8"
+      description={
+        <>
+          <p>
+            In the first eight rounds, each player partners with every other
+            player twice in back-to-back games and faces everyone else at least
+            twice. The final four rounds repeat the teams if there is time.
+          </p>
+          <p>
+            If there's only time for four games, play rounds 1, 3, 5, and 7 for
+            a fairly even round robin.
+          </p>
+        </>
+      }
     />
   );
 }
