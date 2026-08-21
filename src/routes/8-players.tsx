@@ -50,6 +50,11 @@ const roundRobin: RoundRobin = [
   ],
 ];
 
+const completedRoundsStorage = atomWithStorage(
+  '8-players--completed-rounds',
+  roundRobin.map(() => false),
+);
+
 export const Route = createFileRoute('/8-players')({
   component: FiveToEightPlayers,
 });
@@ -69,6 +74,7 @@ function FiveToEightPlayers() {
         }
         namesStorage={namesStorage}
         courtStorage={courtStorage}
+        completedRoundsStorage={completedRoundsStorage}
         roundRobin={roundRobin}
       />
     </>

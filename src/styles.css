@@ -216,12 +216,36 @@ body {
   margin-bottom: 10px;
 }
 .round-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   background: #1a1a18;
   color: white;
   font-size: 13px;
   font-weight: 500;
   padding: 8px 14px;
   letter-spacing: 0.2px;
+}
+.round-check {
+  width: 22px;
+  height: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  color: #1a1a18;
+  background: transparent;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+}
+.round-check:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+.round-complete .round-header {
+  background: #0f6b58;
+}
+.round-complete .round-check {
+  border-color: white;
+  background: white;
 }
 .court-row {
   display: flex;

@@ -107,6 +107,11 @@ const roundRobin: RoundRobin = [
   ],
 ];
 
+const completedRoundsStorage = atomWithStorage(
+  '8-players-mixed--completed-rounds',
+  roundRobin.map(() => false),
+);
+
 export const Route = createFileRoute('/8-players-mixed')({
   component: FiveToEightPlayersMixed,
 });
@@ -117,6 +122,7 @@ function FiveToEightPlayersMixed() {
       title="Mixed Doubles Round Robin: 8 Players"
       namesStorage={namesStorage}
       courtStorage={courtStorage}
+      completedRoundsStorage={completedRoundsStorage}
       roundRobin={roundRobin}
       playerGridClass="mixed-doubles-8"
       description={

@@ -4,9 +4,17 @@ type TableProps = {
   rows: { matchups: [ReactNode, ReactNode][] }[];
   courts: string[];
   handleCourtChange: (index: number, value: string) => void;
+  completedRounds: boolean[];
+  handleRoundComplete: (index: number) => void;
 };
 
-export function NCourtTable({ rows, courts, handleCourtChange }: TableProps) {
+export function NCourtTable({
+  rows,
+  courts,
+  handleCourtChange,
+  completedRounds,
+  handleRoundComplete,
+}: TableProps) {
   return (
     <>
       <div className="table-view">
@@ -61,8 +69,25 @@ export function NCourtTable({ rows, courts, handleCourtChange }: TableProps) {
       <div className="card-view">
         {rows.map(({ matchups }, index) => {
           return (
-            <div className="round-card" key={index}>
-              <div className="round-header">Round {index + 1}</div>
+            <div
+              className={[
+                'round-card',
+                completedRounds[index] ? 'round-complete' : '',
+              ].join(' ')}
+              key={index}
+            >
+              <div className="round-header">
+                <span>Round {index + 1}</span>
+                <button
+                  className="round-check"
+                  type="button"
+                  aria-label={`Mark round ${index + 1} as ${completedRounds[index] ? 'incomplete' : 'complete'}`}
+                  aria-pressed={completedRounds[index] ?? false}
+                  onClick={() => handleRoundComplete(index)}
+                >
+                  {completedRounds[index] ? '✓' : ''}
+                </button>
+              </div>
               {matchups.map(([teamA, teamB], j) => {
                 return (
                   <div className="court-row" key={j}>

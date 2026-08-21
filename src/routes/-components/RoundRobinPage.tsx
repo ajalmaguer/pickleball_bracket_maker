@@ -18,6 +18,11 @@ type RoundRobinPageProps = {
   description?: ReactNode;
   namesStorage: WritableAtom<string[], [SetStateAction<string[]>], void>;
   courtStorage: WritableAtom<string[], [SetStateAction<string[]>], void>;
+  completedRoundsStorage: WritableAtom<
+    boolean[],
+    [SetStateAction<boolean[]>],
+    void
+  >;
   roundRobin: RoundRobin;
   playerGridClass?: string;
 };
@@ -27,11 +32,15 @@ export function RoundRobinPage({
   description,
   namesStorage,
   courtStorage,
+  completedRoundsStorage,
   roundRobin,
   playerGridClass,
 }: RoundRobinPageProps) {
   const [playerNames, setPlayerNames] = useAtom(namesStorage);
   const [courts, setCourts] = useAtom(courtStorage);
+  const [completedRounds, setCompletedRounds] = useAtom(
+    completedRoundsStorage,
+  );
 
   const tableRows = roundRobin.map((round) => {
     const matchups: [ReactNode, ReactNode][] = [];
@@ -62,6 +71,14 @@ export function RoundRobinPage({
     });
   }
 
+  function handleRoundComplete(index: number) {
+    setCompletedRounds((current) => {
+      const newArray = [...current];
+      newArray[index] = !newArray[index];
+      return newArray;
+    });
+  }
+
   return (
     <div>
       <button className="print-btn" onClick={() => window.print()}>
@@ -82,6 +99,8 @@ export function RoundRobinPage({
         rows={tableRows}
         courts={courts}
         handleCourtChange={handleCourtChange}
+        completedRounds={completedRounds}
+        handleRoundComplete={handleRoundComplete}
       />
 
       <div className="players">
