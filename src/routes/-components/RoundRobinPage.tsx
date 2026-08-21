@@ -1,8 +1,11 @@
 import type { PlayerId, RoundRobin } from '@/types';
+import { compressToEncodedURIComponent } from 'lz-string';
 import type { SetStateAction, WritableAtom } from 'jotai';
 import { useAtom } from 'jotai/react';
-import type { ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
+import { useSharedPlayers } from '@/hooks/useSharedPlayers';
 import { NCourtTable } from './NCourtTable';
+import { ShareModal } from './ShareModal';
 
 function formatNames(
   [playerAId, playerBId]: [PlayerId, PlayerId],
@@ -36,11 +39,26 @@ export function RoundRobinPage({
   roundRobin,
   playerGridClass,
 }: RoundRobinPageProps) {
+  const { sharedPlayers, clearSharedPlayers } = useSharedPlayers();
   const [playerNames, setPlayerNames] = useAtom(namesStorage);
   const [courts, setCourts] = useAtom(courtStorage);
-  const [completedRounds, setCompletedRounds] = useAtom(
-    completedRoundsStorage,
-  );
+  const [completedRounds, setCompletedRounds] = useAtom(completedRoundsStorage);
+  const [shareUrl, setShareUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (sharedPlayers !== null) {
+      setPlayerNames(sharedPlayers);
+    }
+  }, [setPlayerNames, sharedPlayers]);
+
+  function handleShare() {
+    const url = new URL(window.location.href);
+    url.searchParams.set(
+      'players',
+      compressToEncodedURIComponent(JSON.stringify(playerNames)),
+    );
+    setShareUrl(url.toString());
+  }
 
   const tableRows = roundRobin.map((round) => {
     const matchups: [ReactNode, ReactNode][] = [];
@@ -64,6 +82,7 @@ export function RoundRobinPage({
   }
 
   function handleNameChange(index: number, value: string) {
+    clearSharedPlayers();
     setPlayerNames((current) => {
       const newArray = [...current];
       newArray[index] = value;
@@ -81,9 +100,17 @@ export function RoundRobinPage({
 
   return (
     <div>
-      <button className="print-btn" onClick={() => window.print()}>
-        Print / Save as PDF
-      </button>
+      <div className="flex justify-between">
+        <button className="print-btn" onClick={() => window.print()}>
+          Print / Save as PDF
+        </button>
+        <button className="print-btn" onClick={handleShare} type="button">
+          Share
+        </button>
+        {shareUrl && (
+          <ShareModal shareUrl={shareUrl} onClose={() => setShareUrl(null)} />
+        )}
+      </div>
 
       <div className="header">
         <div>
