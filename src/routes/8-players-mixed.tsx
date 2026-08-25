@@ -28,14 +28,14 @@ const roundRobin: RoundRobin = [
     { serve: [2, 6], receive: [3, 7] },
     { serve: [4, 8], receive: [1, 5] },
   ],
-  [
-    { serve: [4, 8], receive: [2, 6] },
-    { serve: [3, 7], receive: [1, 5] },
-  ],
   // [
-  //   { serve: [3, 7], receive: [4, 8] },
-  //   { serve: [2, 6], receive: [1, 5] },
+  //   { serve: [4, 8], receive: [2, 6] },
+  //   { serve: [3, 7], receive: [1, 5] },
   // ],
+  [
+    { serve: [3, 7], receive: [4, 8] },
+    { serve: [2, 6], receive: [1, 5] },
+  ],
 
   // 1 > 1, 6
   // 2 > 2, 7
@@ -90,8 +90,8 @@ const roundRobin: RoundRobin = [
 
   // extra if we have time - third round from each one
   [
-    { serve: [3, 7], receive: [4, 8] },
-    { serve: [2, 6], receive: [1, 5] },
+    { serve: [4, 8], receive: [2, 6] },
+    { serve: [3, 7], receive: [1, 5] },
   ],
   [
     { serve: [3, 8], receive: [4, 5] },
