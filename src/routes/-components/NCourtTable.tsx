@@ -91,7 +91,19 @@ export function NCourtTable({
               {matchups.map(([teamA, teamB], j) => {
                 return (
                   <div className="court-row" key={j}>
-                    <span className="court-label label-a">{courts[0]}</span>
+                    <input
+                      aria-label={`Court ${j + 1} name`}
+                      className={[
+                        'court-label',
+                        'mobile-court-input',
+                        j % 2 === 0 ? 'label-a' : 'label-b',
+                      ].join(' ')}
+                      type="text"
+                      value={courts[j] ?? ''}
+                      onChange={(event) =>
+                        handleCourtChange(j, event.target.value)
+                      }
+                    />
                     <div className="mobile-matchup">
                       <span className="mobile-team">{teamA}</span>
                       <span className="mobile-vs">vs</span>
