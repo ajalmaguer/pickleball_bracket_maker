@@ -1,9 +1,9 @@
 import type { PlayerId, RoundRobin } from '@/types';
-import { compressToEncodedURIComponent } from 'lz-string';
 import type { SetStateAction, WritableAtom } from 'jotai';
 import { useAtom } from 'jotai/react';
-import { useEffect, useState, type ReactNode } from 'react';
-import { useSharedPlayers } from '@/hooks/useSharedPlayers';
+import { type ReactNode } from 'react';
+import { usePlayerNames } from '@/hooks/usePlayerNames';
+import { useModal } from '@/hooks/useModal';
 import { NCourtTable } from './NCourtTable';
 import { ShareModal } from './ShareModal';
 
@@ -39,26 +39,11 @@ export function RoundRobinPage({
   roundRobin,
   playerGridClass,
 }: RoundRobinPageProps) {
-  const { sharedPlayers, clearSharedPlayers } = useSharedPlayers();
-  const [playerNames, setPlayerNames] = useAtom(namesStorage);
+  const { playerNames, handleNameChange, handleShare, shareUrl } =
+    usePlayerNames(namesStorage);
+  const shareModal = useModal();
   const [courts, setCourts] = useAtom(courtStorage);
   const [completedRounds, setCompletedRounds] = useAtom(completedRoundsStorage);
-  const [shareUrl, setShareUrl] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (sharedPlayers !== null) {
-      setPlayerNames(sharedPlayers);
-    }
-  }, [setPlayerNames, sharedPlayers]);
-
-  function handleShare() {
-    const url = new URL(window.location.href);
-    url.searchParams.set(
-      'players',
-      compressToEncodedURIComponent(JSON.stringify(playerNames)),
-    );
-    setShareUrl(url.toString());
-  }
 
   const tableRows = roundRobin.map((round) => {
     const matchups: [ReactNode, ReactNode][] = [];
@@ -81,15 +66,6 @@ export function RoundRobinPage({
     });
   }
 
-  function handleNameChange(index: number, value: string) {
-    clearSharedPlayers();
-    setPlayerNames((current) => {
-      const newArray = [...current];
-      newArray[index] = value;
-      return newArray;
-    });
-  }
-
   function handleRoundComplete(index: number) {
     setCompletedRounds((current) => {
       const newArray = [...current];
@@ -104,11 +80,18 @@ export function RoundRobinPage({
         <button className="print-btn" onClick={() => window.print()}>
           Print / Save as PDF
         </button>
-        <button className="print-btn" onClick={handleShare} type="button">
+        <button
+          className="print-btn"
+          onClick={() => {
+            handleShare();
+            shareModal.open();
+          }}
+          type="button"
+        >
           Share
         </button>
-        {shareUrl && (
-          <ShareModal shareUrl={shareUrl} onClose={() => setShareUrl(null)} />
+        {shareModal.isOpen && (
+          <ShareModal shareUrl={shareUrl} onClose={shareModal.close} />
         )}
       </div>
 
